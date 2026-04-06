@@ -7,6 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Article from "./pages/Article";
 import Category from "./pages/Category";
+import AdminDashboard from "./pages/AdminDashboard";
+import ArticleEditor from "./pages/ArticleEditor";
 
 function Router() {
   return (
@@ -14,6 +16,9 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/article/:slug"} component={Article} />
       <Route path={"/category/:slug"} component={Category} />
+      <Route path={"/admin"} component={AdminDashboard} />
+      <Route path={"/admin/articles/new"} component={ArticleEditor} />
+      <Route path={"/admin/articles/:id/edit"} component={ArticleEditor} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
