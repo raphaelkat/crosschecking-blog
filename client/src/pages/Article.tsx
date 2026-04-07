@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, ChevronRight, Share2, MessageCircle } from "lucide-react";
 import { Streamdown } from "streamdown";
+import { setMetaTags, setArticleSchema } from "@/lib/seo";
 
 export default function Article() {
   const { slug } = useParams<{ slug: string }>();
@@ -14,6 +15,31 @@ export default function Article() {
   const [commentStatus, setCommentStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
   const { data: article, isLoading } = trpc.articles.getBySlug.useQuery({ slug: slug || "" });
+
+  // Set SEO meta tags and schema
+  useEffect(() => {
+    if (article) {
+      setMetaTags({
+        title: article.metaTitle || article.title,
+        description: article.metaDescription || article.excerpt || "",
+        keyword: article.focusKeyword || undefined,
+        url: `${window.location.origin}/article/${article.slug}`,
+        type: "article",
+        author: "Crosschecking.Blog",
+        publishedDate: new Date(article.createdAt),
+        modifiedDate: new Date(article.updatedAt),
+      });
+
+      setArticleSchema({
+        title: article.title,
+        description: article.excerpt || "",
+        author: "Crosschecking.Blog",
+        datePublished: new Date(article.createdAt),
+        dateModified: new Date(article.updatedAt),
+        url: `${window.location.origin}/article/${article.slug}`,
+      });
+    }
+  }, [article]);
   const { data: relatedArticles } = trpc.articles.related.useQuery(
     { articleId: article?.id || 0, limit: 3 },
     { enabled: !!article?.id }

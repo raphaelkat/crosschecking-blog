@@ -1,16 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, Search, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/contexts/ThemeContext";
+import { setMetaTags } from "@/lib/seo";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [email, setEmail] = useState("");
   const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  // Set SEO meta tags for homepage
+  useEffect(() => {
+    setMetaTags({
+      title: "Crosschecking.Blog - High-Authority Comparison & Review Articles",
+      description: "In-depth comparison articles and reviews for AI, SaaS, E-commerce, and more. Data-driven insights to help you make informed decisions.",
+      keyword: "comparison, reviews, AI, SaaS, tech",
+      url: window.location.origin,
+      type: "website",
+    });
+  }, []);
 
   const { data: categories, isLoading: categoriesLoading } = trpc.categories.list.useQuery();
   const { data: featuredArticles, isLoading: articlesLoading } = trpc.articles.list.useQuery({

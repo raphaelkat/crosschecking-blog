@@ -1,6 +1,8 @@
 import { useParams, Link } from "wouter";
+import { useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Loader2, ChevronRight } from "lucide-react";
+import { setMetaTags } from "@/lib/seo";
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
@@ -10,6 +12,19 @@ export default function Category() {
     { categoryId: category?.id || 0, limit: 20 },
     { enabled: !!category?.id }
   );
+
+  // Set SEO meta tags for category
+  useEffect(() => {
+    if (category) {
+      setMetaTags({
+        title: `${category.name} - Crosschecking.Blog`,
+        description: category.description || `Explore our collection of ${category.name} articles and comparisons`,
+        keyword: category.name,
+        url: `${window.location.origin}/category/${category.slug}`,
+        type: "website",
+      });
+    }
+  }, [category]);
 
   if (!category) {
     return (
