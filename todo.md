@@ -130,8 +130,8 @@
 - [ ] Test affiliate link tracking
 
 ## Sample Content & Population
-- [ ] Create 20 strategic categories
-- [ ] Populate sample articles across categories (3-5 per category)
+- [x] Create 20 strategic categories
+- [x] Populate sample articles across categories (3-5 per category)
 - [ ] Add affiliate links to sample articles
 - [ ] Create comparison tables in sample articles
 - [ ] Add FAQ sections to sample articles
