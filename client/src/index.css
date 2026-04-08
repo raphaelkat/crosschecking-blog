@@ -211,15 +211,15 @@
   }
 
   .article-card {
-    @apply flex flex-col h-full group;
+    @apply flex flex-col h-full;
   }
 
   .article-image {
-    @apply w-full h-64 object-cover rounded-sm mb-4 group-hover:opacity-90 transition-opacity;
+    @apply w-full h-64 object-cover rounded-sm mb-4 transition-opacity;
   }
 
   .article-title {
-    @apply text-xl md:text-2xl font-bold mb-2 group-hover:text-accent transition-colors;
+    @apply text-xl md:text-2xl font-bold mb-2 transition-colors;
   }
 
   .article-meta {
@@ -270,19 +270,5 @@
     @apply text-base leading-relaxed;
   }
 
-  .group {
-    @apply relative;
-  }
 
-  .group-hover\:opacity-90:hover {
-    @apply opacity-90;
-  }
-
-  .group-hover\:text-accent:hover {
-    @apply text-accent;
-  }
-
-  .group-hover\:gap-3:hover {
-    @apply gap-3;
-  }
 }

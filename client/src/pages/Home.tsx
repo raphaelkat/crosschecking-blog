@@ -53,13 +53,13 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-card border-b border-border">
         <div className="container flex items-center justify-between h-16">
-          <Link href="/">
-            <a className="text-2xl font-bold font-serif">Crosschecking</a>
+          <Link href="/" className="text-2xl font-bold font-serif">
+            Crosschecking
           </Link>
           <nav className="hidden md:flex items-center gap-8">
             {categories?.slice(0, 5).map((cat) => (
-              <Link key={cat.id} href={`/category/${cat.slug}`}>
-                <a className="text-sm hover:text-accent transition-colors">{cat.name}</a>
+              <Link key={cat.id} href={`/category/${cat.slug}`} className="text-sm hover:text-accent transition-colors">
+                {cat.name}
               </Link>
             ))}
           </nav>
@@ -79,31 +79,24 @@ export default function Home() {
       <section className="bg-gradient-to-br from-secondary via-background to-background py-16 md:py-24">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6 leading-tight">
-              Make Informed Decisions
-            </h1>
-            <p className="text-xl text-foreground/80 mb-8 leading-relaxed">
-              In-depth, data-driven comparisons across Tech, AI, Finance, E-commerce, and more. 
-              Discover the best solutions for your needs with our expert analysis.
+            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-6">Make Informed Decisions</h1>
+            <p className="text-xl text-muted-foreground mb-12">
+              In-depth, data-driven comparisons across Tech, AI, Finance, E-commerce, and more. Discover the best solutions for your needs with our expert analysis.
             </p>
 
             {/* Search Bar */}
-            <div className="flex gap-2 mb-8">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <Input
-                  type="text"
-                  placeholder="Search articles..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <Link href={`/search?q=${encodeURIComponent(searchQuery)}`}>
-                <a>
-                  <Button>Search</Button>
-                </a>
-              </Link>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+              <Input
+                placeholder="Search articles..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="max-w-md"
+              />
+              <Button asChild>
+                <Link href={`/search?q=${encodeURIComponent(searchQuery)}`}>
+                  Search
+                </Link>
+              </Button>
             </div>
 
             {/* Category Pills */}
@@ -112,10 +105,8 @@ export default function Home() {
                 <Loader2 className="animate-spin" />
               ) : (
                 categories?.slice(0, 8).map((cat) => (
-                  <Link key={cat.id} href={`/category/${cat.slug}`}>
-                    <a className="badge hover:bg-accent hover:text-accent-foreground transition-colors">
-                      {cat.name}
-                    </a>
+                  <Link key={cat.id} href={`/category/${cat.slug}`} className="badge hover:bg-accent hover:text-accent-foreground transition-colors">
+                    {cat.name}
                   </Link>
                 ))
               )}
@@ -132,10 +123,8 @@ export default function Home() {
               <h2 className="text-4xl font-serif font-bold mb-2">Latest Comparisons</h2>
               <p className="text-muted-foreground">Discover our most recent in-depth analysis</p>
             </div>
-            <Link href="/articles">
-              <a className="flex items-center gap-2 text-accent hover:gap-3 transition-all">
-                View All <ChevronRight className="w-4 h-4" />
-              </a>
+            <Link href="/articles" className="flex items-center gap-2 text-accent hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -146,26 +135,24 @@ export default function Home() {
           ) : (
             <div className="article-grid">
               {featuredArticles?.map((article) => (
-                <Link key={article.id} href={`/article/${article.slug}`}>
-                  <a className="article-card group">
-                    {article.featuredImage && (
-                      <img
-                        src={article.featuredImage}
-                        alt={article.title}
-                        className="article-image"
-                      />
-                    )}
-                    <div className="flex-1">
-                      <div className="article-meta">
-                        {new Date(article.publishedAt || article.createdAt).toLocaleDateString()}
-                      </div>
-                      <h3 className="article-title">{article.title}</h3>
-                      <p className="article-excerpt">{article.excerpt || article.content.substring(0, 150)}...</p>
+                <Link key={article.id} href={`/article/${article.slug}`} className="article-card">
+                  {article.featuredImage && (
+                    <img
+                      src={article.featuredImage}
+                      alt={article.title}
+                      className="article-image"
+                    />
+                  )}
+                  <div className="flex-1">
+                    <div className="article-meta">
+                      {new Date(article.publishedAt || article.createdAt).toLocaleDateString()}
                     </div>
-                    <div className="flex items-center gap-2 text-accent group-hover:gap-3 transition-all">
-                      Read More <ChevronRight className="w-4 h-4" />
-                    </div>
-                  </a>
+                    <h3 className="article-title">{article.title}</h3>
+                    <p className="article-excerpt">{article.excerpt || article.content.substring(0, 150)}...</p>
+                  </div>
+                  <div className="flex items-center gap-2 text-accent transition-all">
+                    Read More <ChevronRight className="w-4 h-4" />
+                  </div>
                 </Link>
               ))}
             </div>
@@ -178,108 +165,87 @@ export default function Home() {
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <div className="lg:col-span-2">
-              <h2 className="text-3xl font-serif font-bold mb-8">Why Compare?</h2>
-              <div className="prose space-y-6">
-                <p className="text-lg leading-relaxed">
-                  In 2026, choosing between products and services is no longer about price alone—it's about finding 
-                  the perfect fit for your unique needs. Our comparative analysis framework helps you evaluate options 
-                  across critical dimensions: value for money, ease of use, innovation, and reliability.
-                </p>
-                <p className="text-lg leading-relaxed">
-                  Whether you're evaluating AI tools for content creation, comparing payment solutions for your business, 
-                  or exploring the latest tech gadgets, we provide the data-driven insights you need to make confident decisions.
-                </p>
+              <h2 className="text-3xl font-serif font-bold mb-8">Why Choose Crosschecking?</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Data-Driven Analysis</h3>
+                  <p className="text-muted-foreground">We research the latest 2026 trends, pricing, and user reviews to provide accurate comparisons.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Honest Reviews</h3>
+                  <p className="text-muted-foreground">Every product includes balanced pros and cons. We only recommend solutions we genuinely believe in.</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">SEO-Optimized Content</h3>
+                  <p className="text-muted-foreground">Our articles rank on the first page of search engines, helping you discover the best solutions.</p>
+                </div>
               </div>
             </div>
 
             {/* Trending Widget */}
-            <div className="bg-card rounded-lg p-6 border border-border h-fit">
-              <h3 className="text-xl font-serif font-bold mb-6">Trending Now</h3>
+            <aside className="bg-card rounded-lg p-6 border border-border">
+              <h3 className="text-xl font-bold mb-6">Trending Now</h3>
               <div className="space-y-4">
-                {trendingArticles?.map((article, idx) => (
-                  <Link key={article.id} href={`/article/${article.slug}`}>
-                    <a className="block group">
-                      <div className="flex items-start gap-3">
-                        <span className="text-2xl font-serif font-bold text-muted-foreground group-hover:text-accent transition-colors">
-                          {idx + 1}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="font-bold text-sm group-hover:text-accent transition-colors line-clamp-2">
-                            {article.title}
-                          </h4>
-                          <p className="text-xs text-muted-foreground mt-1">
-                            {article.viewCount} views
-                          </p>
-                        </div>
-                      </div>
-                    </a>
+                {trendingArticles?.map((article) => (
+                  <Link key={article.id} href={`/article/${article.slug}`} className="block hover:text-accent transition-colors">
+                    <p className="font-semibold text-sm line-clamp-2">{article.title}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{new Date(article.publishedAt || article.createdAt).toLocaleDateString()}</p>
                   </Link>
                 ))}
               </div>
-            </div>
+            </aside>
           </div>
         </div>
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-16 md:py-24 bg-accent text-accent-foreground">
-        <div className="container">
-          <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-4xl font-serif font-bold mb-4">Stay Ahead of the Curve</h2>
-            <p className="text-lg mb-8 opacity-90">
-              Subscribe to our newsletter to receive the latest insights and updates on new comparison articles 
-              directly in your inbox.
-            </p>
+      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+        <div className="container max-w-2xl mx-auto text-center">
+          <h2 className="text-4xl font-serif font-bold mb-4">Stay Updated</h2>
+          <p className="text-lg mb-8 opacity-90">Get the latest comparison articles and insights delivered to your inbox.</p>
+          
+          <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="bg-primary-foreground text-primary placeholder-primary/50"
+              required
+            />
+            <Button 
+              type="submit" 
+              variant="secondary"
+              disabled={subscribeStatus === "loading"}
+            >
+              {subscribeStatus === "loading" ? "Subscribing..." : "Subscribe"}
+            </Button>
+          </form>
 
-            <form onSubmit={handleSubscribe} className="flex gap-2 mb-4">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-accent-foreground text-accent"
-                disabled={subscribeStatus === "loading"}
-              />
-              <Button
-                type="submit"
-                variant="secondary"
-                disabled={subscribeStatus === "loading"}
-              >
-                {subscribeStatus === "loading" ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  "Subscribe"
-                )}
-              </Button>
-            </form>
-
-            {subscribeStatus === "success" && (
-              <p className="text-sm text-green-600">Thank you! Check your email to confirm subscription.</p>
-            )}
-            {subscribeStatus === "error" && (
-              <p className="text-sm text-red-600">Something went wrong. Please try again.</p>
-            )}
-          </div>
+          {subscribeStatus === "success" && (
+            <p className="text-sm mt-4">✓ Successfully subscribed!</p>
+          )}
+          {subscribeStatus === "error" && (
+            <p className="text-sm mt-4">Error subscribing. Please try again.</p>
+          )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-card border-t border-border py-12">
+      <footer className="border-t border-border py-12">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
-              <h3 className="font-serif font-bold mb-4">Crosschecking</h3>
-              <p className="text-sm text-muted-foreground">
-                High-authority comparative analysis and reviews for informed decision-making.
-              </p>
+              <h4 className="font-bold mb-4">Crosschecking</h4>
+              <p className="text-sm text-muted-foreground">High-authority comparison and review articles for informed decision-making.</p>
             </div>
             <div>
               <h4 className="font-bold mb-4">Categories</h4>
               <ul className="space-y-2 text-sm">
-                {categories?.slice(0, 5).map((cat) => (
+                {categories?.slice(0, 4).map((cat) => (
                   <li key={cat.id}>
-                    <Link href={`/category/${cat.slug}`}>
-                      <a className="text-muted-foreground hover:text-accent transition-colors">{cat.name}</a>
+                    <Link href={`/category/${cat.slug}`} className="text-muted-foreground hover:text-accent transition-colors">
+                      {cat.name}
                     </Link>
                   </li>
                 ))}
@@ -288,25 +254,20 @@ export default function Home() {
             <div>
               <h4 className="font-bold mb-4">Resources</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">About Us</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Contact</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Privacy Policy</a></li>
+                <li><a href="/sitemap.xml" className="text-muted-foreground hover:text-accent transition-colors">Sitemap</a></li>
+                <li><a href="/robots.txt" className="text-muted-foreground hover:text-accent transition-colors">Robots.txt</a></li>
               </ul>
             </div>
             <div>
               <h4 className="font-bold mb-4">Legal</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Terms of Service</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Affiliate Disclosure</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Cookie Policy</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Disclaimer</a></li>
               </ul>
             </div>
           </div>
-
-          <div className="border-t border-border pt-8">
-            <p className="text-center text-sm text-muted-foreground">
-              © 2026 Crosschecking.blog. All rights reserved. | Affiliate Disclosure: We may earn commissions from affiliate links.
-            </p>
+          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
+            <p>&copy; 2026 Crosschecking.Blog. All rights reserved.</p>
           </div>
         </div>
       </footer>
