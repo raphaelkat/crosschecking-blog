@@ -9,11 +9,13 @@ import Article from "./pages/Article";
 import Category from "./pages/Category";
 import AdminDashboard from "./pages/AdminDashboard";
 import ArticleEditor from "./pages/ArticleEditor";
+import Search from "./pages/Search";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/search"} component={Search} />
       <Route path={"/article/:slug"} component={Article} />
       <Route path={"/category/:slug"} component={Category} />
       <Route path={"/admin"} component={AdminDashboard} />

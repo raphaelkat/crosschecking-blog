@@ -6,6 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Loader2, ChevronRight, Share2, MessageCircle } from "lucide-react";
 import { Streamdown } from "streamdown";
 import { setMetaTags, setArticleSchema } from "@/lib/seo";
+import { TableOfContents } from "@/components/TableOfContents";
+import { ProsCons } from "@/components/ProsCons";
+import { FAQ } from "@/components/FAQ";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function Article() {
   const { slug } = useParams<{ slug: string }>();
@@ -127,6 +131,14 @@ export default function Article() {
             <p className="text-xl text-foreground/80 leading-relaxed">{article.excerpt}</p>
           </div>
 
+          {/* Breadcrumb Navigation */}
+          <Breadcrumb
+            items={[
+              { label: "Home", href: "/" },
+              { label: "Article" },
+            ]}
+          />
+
           {/* Featured Image */}
           {article.featuredImage && (
             <div className="mb-12 -mx-4 md:mx-0">
@@ -137,6 +149,9 @@ export default function Article() {
               />
             </div>
           )}
+
+          {/* Table of Contents */}
+          <TableOfContents content={article.content as string} />
 
           {/* TL;DR Section */}
           {article.tldr && (

@@ -4,8 +4,9 @@ import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { getDb, getUserByOpenId } from "./db";
 import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments } from "../drizzle/schema";
-import { eq, desc, like, and, sql } from "drizzle-orm";
+import { eq, desc, like, and } from "drizzle-orm";
 import { z } from "zod";
+import { sql } from "drizzle-orm";
 
 export const appRouter = router({
   system: systemRouter,
@@ -142,6 +143,52 @@ export const appRouter = router({
           ...article,
           tags: articleTagsResult.map(r => r.tag),
           affiliateLinks: affiliates,
+        };
+      }),
+
+    search: publicProcedure
+      .input(
+        z.object({
+          query: z.string().min(1),
+          categoryId: z.number().optional(),
+          limit: z.number().default(12),
+          offset: z.number().default(0),
+        })
+      )
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return { articles: [], total: 0 };
+        
+        const conditions: any[] = [eq(articles.status, "published")];
+        
+        if (input.categoryId) {
+          conditions.push(eq(articles.categoryId, input.categoryId));
+        }
+
+        // Search in title, excerpt, and content
+        conditions.push(
+          sql`(${articles.title} LIKE ${`%${input.query}%`} OR ${articles.excerpt} LIKE ${`%${input.query}%`} OR ${articles.content} LIKE ${`%${input.query}%`})`
+        );
+
+        const searchResults = await db
+          .select()
+          .from(articles)
+          .where(and(...conditions))
+          .orderBy(desc(articles.publishedAt))
+          .limit(input.limit)
+          .offset(input.offset);
+
+        // Get total count
+        const countResult = await db
+          .select({ count: sql`COUNT(*)` })
+          .from(articles)
+          .where(and(...conditions));
+
+        const total = countResult[0]?.count as number || 0;
+
+        return {
+          articles: searchResults,
+          total,
         };
       }),
 
