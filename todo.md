@@ -138,10 +138,10 @@
 - [ ] Add tags and metadata to articles
 
 ## Documentation & Deployment
-- [ ] Create comprehensive README with setup instructions
-- [ ] Document API endpoints and tRPC procedures
+- [x] Create comprehensive README with setup instructions
+- [x] Document API endpoints and tRPC procedures
 - [ ] Create deployment guide
-- [ ] Document environment variables required
+- [x] Document environment variables required
 - [ ] Create user guide for admin CMS
 - [ ] Add contribution guidelines
 
