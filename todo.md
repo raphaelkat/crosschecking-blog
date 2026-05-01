@@ -117,11 +117,11 @@
 - [ ] Test mobile performance and responsiveness
 
 ## Testing & Quality Assurance
-- [ ] Write vitest tests for article CRUD operations
-- [ ] Write vitest tests for search functionality
+- [x] Write vitest tests for article CRUD operations
+- [x] Write vitest tests for search functionality
 - [ ] Write vitest tests for SEO metadata generation
 - [ ] Write vitest tests for affiliate link management
-- [ ] Write vitest tests for newsletter subscription
+- [x] Write vitest tests for newsletter subscription
 - [ ] Write vitest tests for comment moderation
 - [ ] Test responsive design across devices
 - [ ] Test dark/light theme switching
