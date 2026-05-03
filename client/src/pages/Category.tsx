@@ -1,11 +1,12 @@
 import { useParams, Link } from "wouter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Loader2, ChevronRight } from "lucide-react";
 import { setMetaTags } from "@/lib/seo";
 
 export default function Category() {
   const { slug } = useParams<{ slug: string }>();
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   const { data: category } = trpc.categories.getBySlug.useQuery({ slug: slug || "" });
   const { data: articles, isLoading } = trpc.articles.list.useQuery(
@@ -47,6 +48,15 @@ export default function Category() {
           <Link href="/">
             <a className="text-2xl font-bold font-serif">Crosschecking</a>
           </Link>
+          {/* Tag Filter */}
+          {selectedTags.length > 0 && (
+            <button
+              onClick={() => setSelectedTags([])}
+              className="px-4 py-2 rounded-lg bg-muted hover:bg-muted/80 transition text-sm"
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       </header>
 
