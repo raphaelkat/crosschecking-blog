@@ -1,11 +1,12 @@
-import { useParams, Link } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Loader2, ChevronRight } from "lucide-react";
 import { setMetaTags } from "@/lib/seo";
 
 export default function Category() {
-  const { slug } = useParams<{ slug: string }>();
+  const [location] = useLocation();
+  const slug = location.split('/').pop();
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
 
   const { data: category } = trpc.categories.getBySlug.useQuery({ slug: slug || "" });
@@ -32,9 +33,7 @@ export default function Category() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-serif font-bold mb-4">Category Not Found</h1>
-          <Link href="/">
-            <a className="text-accent hover:underline">Back to Home</a>
-          </Link>
+          <Link href="/" className="text-accent hover:underline">Back to Home</Link>
         </div>
       </div>
     );
@@ -45,9 +44,7 @@ export default function Category() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-card border-b border-border">
         <div className="container flex items-center justify-between h-16">
-          <Link href="/">
-            <a className="text-2xl font-bold font-serif">Crosschecking</a>
-          </Link>
+          <Link href="/" className="text-2xl font-bold font-serif">Crosschecking</Link>
           {/* Tag Filter */}
           {selectedTags.length > 0 && (
             <button
@@ -82,8 +79,7 @@ export default function Category() {
           ) : articles && articles.length > 0 ? (
             <div className="article-grid">
               {articles.map((article) => (
-                <Link key={article.id} href={`/article/${article.slug}`}>
-                  <a className="article-card">
+                <Link key={article.id} href={`/article/${article.slug}`} className="article-card">
                     {article.featuredImage && (
                       <img
                         src={article.featuredImage}
@@ -101,7 +97,6 @@ export default function Category() {
                     <div className="flex items-center gap-2 text-accent hover:gap-3 transition-all">
                       Read More <ChevronRight className="w-4 h-4" />
                     </div>
-                  </a>
                 </Link>
               ))}
             </div>

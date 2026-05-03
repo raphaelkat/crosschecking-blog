@@ -169,3 +169,18 @@
 - [x] Featured image upload component
 - [x] Tag filter component
 - [x] Affiliate click tracking utilities
+
+
+## Branding & Design Improvements
+- [ ] Upload and integrate crosschecking.blog logo
+- [ ] Generate favicon for mobile responsiveness
+- [ ] Extract brand colors from logo and update CSS theme
+- [ ] Consolidate duplicate headers into single header component
+- [ ] Fix dark/light mode toggle functionality
+- [ ] Add social media links from brand.socialmedia.md
+- [ ] Center search articles box in header
+- [ ] Improve menu icon with categories and hover effects
+- [ ] Add share buttons with social media logos
+- [ ] Ensure logo appears in all appropriate locations
+- [ ] Test responsive design with new logo
+- [ ] Verify favicon displays on all devices

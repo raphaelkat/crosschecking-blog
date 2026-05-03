@@ -19,24 +19,26 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoryHover, setCategoryHover] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 bg-background border-b border-border">
-      <div className="container mx-auto px-4 py-4">
+    <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
+      <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between mb-4">
           {/* Logo */}
-          <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer group">
-              <h1 className="text-2xl font-bold text-foreground group-hover:text-accent transition">
-                Crosschecking
-              </h1>
+          <Link href="/" className="flex items-center gap-2 cursor-pointer group">
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground font-bold text-lg">✓</span>
             </div>
+            <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition">
+              Crosschecking
+            </h1>
           </Link>
 
           {/* Right Actions */}
           <div className="flex items-center gap-4">
             {/* Search */}
-            <div className="hidden md:block w-48">
+            <div className="hidden md:block w-56">
               <SearchAutocomplete onSearch={(query) => {
                 window.location.href = `/search?q=${encodeURIComponent(query)}`;
               }} />
@@ -95,16 +97,20 @@ export default function Header() {
 
         {/* Category Navigation */}
         <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:block`}>
-          <div className="flex flex-col md:flex-row gap-2 md:gap-4">
+          <div className="flex flex-col md:flex-row gap-1 md:gap-1">
             {CATEGORIES.map((category) => (
               <Link key={category.slug} href={`/category/${category.slug}`}>
-                <button className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition whitespace-nowrap">
+                <button 
+                  className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200"
+                  onMouseEnter={() => setCategoryHover(category.slug)}
+                  onMouseLeave={() => setCategoryHover(null)}
+                >
                   {category.name}
                 </button>
               </Link>
             ))}
             <Link href="/search">
-              <button className="px-4 py-2 text-sm font-medium text-foreground hover:bg-muted rounded-lg transition whitespace-nowrap">
+              <button className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200">
                 Search
               </button>
             </Link>

@@ -1,4 +1,4 @@
-import { useParams, Link } from "wouter";
+import { useLocation, Link } from "wouter";
 import { useEffect, useState } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,8 @@ import { FAQ } from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function Article() {
-  const { slug } = useParams<{ slug: string }>();
+  const [location] = useLocation();
+  const slug = location.split('/').pop();
   const [commentAuthor, setCommentAuthor] = useState("");
   const [commentEmail, setCommentEmail] = useState("");
   const [commentContent, setCommentContent] = useState("");
@@ -90,10 +91,8 @@ export default function Article() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-serif font-bold mb-4">Article Not Found</h1>
-          <Link href="/">
-            <a>
-              <Button>Back to Home</Button>
-            </a>
+          <Link href="/" asChild>
+            <Button>Back to Home</Button>
           </Link>
         </div>
       </div>
@@ -105,10 +104,35 @@ export default function Article() {
       {/* Header */}
       <header className="sticky top-0 z-50 bg-card border-b border-border">
         <div className="container flex items-center justify-between h-16">
-          <Link href="/">
-            <a className="text-2xl font-bold font-serif">Crosschecking</a>
-          </Link>
-          <div className="flex items-center gap-4">
+          <Link href="/" className="text-2xl font-bold font-serif">Crosschecking</Link>
+          <div className="flex items-center gap-3">
+            <a
+              href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(article.title)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              aria-label="Share on Twitter"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7a10.6 10.6 0 01-3 1" /></svg>
+            </a>
+            <a
+              href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              aria-label="Share on Facebook"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a6 6 0 00-6 6v3H7v4h2v8h4v-8h3l1-4h-4V8a2 2 0 012-2h3z" /></svg>
+            </a>
+            <a
+              href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              aria-label="Share on LinkedIn"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" /><circle cx="4" cy="4" r="2" /></svg>
+            </a>
             <button
               onClick={() => navigator.share?.({ title: article.title, url: window.location.href })}
               className="p-2 hover:bg-secondary rounded-lg transition-colors"
