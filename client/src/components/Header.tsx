@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
+import SearchAutocomplete from "./SearchAutocomplete";
 
 const CATEGORIES = [
   { name: "AI & ML", slug: "ai-ml" },
@@ -34,6 +35,13 @@ export default function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-4">
+            {/* Search */}
+            <div className="hidden md:block w-48">
+              <SearchAutocomplete onSearch={(query) => {
+                window.location.href = `/search?q=${encodeURIComponent(query)}`;
+              }} />
+            </div>
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
