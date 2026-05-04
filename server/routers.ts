@@ -119,6 +119,13 @@ export const appRouter = router({
 
         const article = result[0];
 
+        // Get category
+        const categoryResult = await db
+          .select()
+          .from(categories)
+          .where(eq(categories.id, article.categoryId))
+          .limit(1);
+
         // Get tags
         const articleTagsResult = await db
           .select({ tag: tags })
@@ -141,6 +148,7 @@ export const appRouter = router({
 
         return {
           ...article,
+          category: categoryResult[0] || null,
           tags: articleTagsResult.map(r => r.tag),
           affiliateLinks: affiliates,
         };
