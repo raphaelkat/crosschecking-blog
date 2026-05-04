@@ -2,10 +2,9 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { getLoginUrl } from "@/const";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "wouter";
-import SearchAutocomplete from "./SearchAutocomplete";
 
 const CATEGORIES = [
   { name: "AI & ML", slug: "ai-ml" },
@@ -19,6 +18,20 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [categoriesDropdownOpen, setCategoriesDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setCategoriesDropdownOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
@@ -36,6 +49,38 @@ export default function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-3 flex-shrink-0">
+            {/* Categories Dropdown - Hidden on mobile */}
+            <div className="hidden md:block relative" ref={dropdownRef}>
+              <button
+                onClick={() => setCategoriesDropdownOpen(!categoriesDropdownOpen)}
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition duration-200"
+              >
+                Categories
+                <ChevronDown 
+                  className={`w-4 h-4 transition-transform duration-200 ${
+                    categoriesDropdownOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {categoriesDropdownOpen && (
+                <div className="absolute right-0 mt-1 w-48 bg-card border border-border rounded-lg shadow-lg py-1 z-50">
+                  {CATEGORIES.map((category) => (
+                    <Link 
+                      key={category.slug} 
+                      href={`/category/${category.slug}`}
+                      onClick={() => setCategoriesDropdownOpen(false)}
+                    >
+                      <button className="w-full text-left px-4 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition duration-150">
+                        {category.name}
+                      </button>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -87,22 +132,24 @@ export default function Header() {
           </div>
         </div>
 
-
-
-        {/* Category Navigation */}
-        <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:block`}>
-          <div className="flex flex-col md:flex-row gap-1 md:gap-1">
+        {/* Category Navigation - Mobile */}
+        <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:hidden`}>
+          <div className="flex flex-col gap-1">
             {CATEGORIES.map((category) => (
               <Link key={category.slug} href={`/category/${category.slug}`}>
                 <button 
-                  className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200"
+                  className="w-full text-left px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200"
+                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {category.name}
                 </button>
               </Link>
             ))}
             <Link href="/search">
-              <button className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200">
+              <button 
+                className="w-full text-left px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 Search
               </button>
             </Link>
