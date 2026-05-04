@@ -41,22 +41,6 @@ export default function Category() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card border-b border-border">
-        <div className="container flex items-center justify-between h-16">
-          <Link href="/" className="text-2xl font-bold font-serif">Crosschecking</Link>
-          {/* Tag Filter */}
-          {selectedTags.length > 0 && (
-            <button
-              onClick={() => setSelectedTags([])}
-              className="px-4 py-2 rounded-lg bg-muted hover:bg-muted/80 transition text-sm"
-            >
-              Clear filters
-            </button>
-          )}
-        </div>
-      </header>
-
       {/* Category Hero */}
       <section className="py-16 md:py-24 bg-secondary/30">
         <div className="container">

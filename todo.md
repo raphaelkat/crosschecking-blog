@@ -172,15 +172,15 @@
 
 
 ## Branding & Design Improvements
-- [ ] Upload and integrate crosschecking.blog logo
-- [ ] Generate favicon for mobile responsiveness
-- [ ] Extract brand colors from logo and update CSS theme
-- [ ] Consolidate duplicate headers into single header component
-- [ ] Fix dark/light mode toggle functionality
-- [ ] Add social media links from brand.socialmedia.md
-- [ ] Center search articles box in header
-- [ ] Improve menu icon with categories and hover effects
-- [ ] Add share buttons with social media logos
-- [ ] Ensure logo appears in all appropriate locations
-- [ ] Test responsive design with new logo
-- [ ] Verify favicon displays on all devices
+- [x] Upload and integrate crosschecking.blog logo
+- [x] Generate favicon for mobile responsiveness
+- [x] Extract brand colors from logo and update CSS theme
+- [x] Consolidate duplicate headers into single header component
+- [x] Fix dark/light mode toggle functionality
+- [x] Add social media links from brand.socialmedia.md
+- [x] Center search articles box in header
+- [x] Improve menu icon with categories and hover effects
+- [x] Add share buttons with social media logos
+- [x] Ensure logo appears in all appropriate locations
+- [x] Test responsive design with new logo
+- [x] Verify favicon displays on all devices

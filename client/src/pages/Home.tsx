@@ -50,31 +50,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-card border-b border-border">
-        <div className="container flex items-center justify-between h-16">
-          <Link href="/" className="text-2xl font-bold font-serif">
-            Crosschecking
-          </Link>
-          <nav className="hidden md:flex items-center gap-8">
-            {categories?.slice(0, 5).map((cat) => (
-              <Link key={cat.id} href={`/category/${cat.slug}`} className="text-sm hover:text-accent transition-colors">
-                {cat.name}
-              </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={toggleTheme}
-              className="p-2 hover:bg-secondary rounded-lg transition-colors"
-              aria-label="Toggle theme"
-            >
-              {theme === "light" ? "🌙" : "☀️"}
-            </button>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-secondary via-background to-background py-16 md:py-24">
         <div className="container">

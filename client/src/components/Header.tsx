@@ -19,31 +19,32 @@ export default function Header() {
   const { theme, toggleTheme } = useTheme();
   const { user, logout, isAuthenticated } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [categoryHover, setCategoryHover] = useState<string | null>(null);
 
   return (
     <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
       <div className="container mx-auto px-4 py-3">
-        <div className="flex items-center justify-between mb-4">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 cursor-pointer group">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-lg">✓</span>
-            </div>
-            <h1 className="text-xl font-bold text-foreground group-hover:text-primary transition">
-              Crosschecking
-            </h1>
+        {/* Top Row: Logo + Centered Search + Actions */}
+        <div className="flex items-center justify-between gap-4 mb-4">
+          {/* Logo - Left */}
+          <Link href="/" className="flex-shrink-0 cursor-pointer group">
+            <img 
+              src="/manus-storage/horizontal_618530b1.png" 
+              alt="Crosschecking.blog" 
+              className="h-10 w-auto hover:opacity-80 transition-opacity"
+            />
           </Link>
 
-          {/* Right Actions */}
-          <div className="flex items-center gap-4">
-            {/* Search */}
-            <div className="hidden md:block w-56">
+          {/* Centered Search - Hidden on mobile */}
+          <div className="hidden md:flex flex-1 justify-center px-4 max-w-md mx-auto">
+            <div className="w-full">
               <SearchAutocomplete onSearch={(query) => {
                 window.location.href = `/search?q=${encodeURIComponent(query)}`;
               }} />
             </div>
+          </div>
 
+          {/* Right Actions */}
+          <div className="flex items-center gap-3 flex-shrink-0">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
@@ -95,6 +96,13 @@ export default function Header() {
           </div>
         </div>
 
+        {/* Mobile Search - Shown only on mobile */}
+        <div className="md:hidden mb-4">
+          <SearchAutocomplete onSearch={(query) => {
+            window.location.href = `/search?q=${encodeURIComponent(query)}`;
+          }} />
+        </div>
+
         {/* Category Navigation */}
         <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:block`}>
           <div className="flex flex-col md:flex-row gap-1 md:gap-1">
@@ -102,8 +110,6 @@ export default function Header() {
               <Link key={category.slug} href={`/category/${category.slug}`}>
                 <button 
                   className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-primary/10 rounded-md transition whitespace-nowrap duration-200"
-                  onMouseEnter={() => setCategoryHover(category.slug)}
-                  onMouseLeave={() => setCategoryHover(null)}
                 >
                   {category.name}
                 </button>
