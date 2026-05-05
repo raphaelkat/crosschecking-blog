@@ -205,3 +205,10 @@
 - [x] Add popular categories component to Home page
 - [x] Style with brand colors and icons
 - [x] Test responsive design on mobile/tablet
+
+
+## Category Icons Enhancement
+- [x] Create icon mapping for all categories
+- [x] Display icons in popular categories cards
+- [ ] Display icons in category dropdown menu
+- [ ] Display icons in footer category links

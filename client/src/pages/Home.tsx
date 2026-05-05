@@ -6,6 +6,7 @@ import { Loader2, Search, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/contexts/ThemeContext";
 import { setMetaTags } from "@/lib/seo";
+import { getCategoryIcon } from "@/lib/categoryIcons";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -116,10 +117,13 @@ export default function Home() {
                   href={`/category/${cat.slug}`}
                   className="group p-6 rounded-lg border border-border bg-card hover:bg-accent/5 transition-all"
                 >
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{cat.name}</h3>
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="text-accent group-hover:text-accent/80 transition-colors flex-shrink-0">
+                      {getCategoryIcon(cat.slug)}
+                    </div>
+                    <h3 className="text-lg font-semibold group-hover:text-accent transition-colors flex-1">{cat.name}</h3>
                   </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2">{cat.description}</p>
+                  <p className="text-sm text-muted-foreground line-clamp-2 ml-12">{cat.description}</p>
                   <div className="mt-4 flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity">
                     Explore <ChevronRight className="w-4 h-4" />
                   </div>
