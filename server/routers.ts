@@ -23,6 +23,7 @@ export const appRouter = router({
 
   // Categories
   categories: router({
+
     migrate: protectedProcedure
       .mutation(async ({ ctx }) => {
         if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
@@ -88,6 +89,17 @@ export const appRouter = router({
       if (!db) return [];
       return await db.select().from(categories).orderBy(categories.order);
     }),
+    popular: publicProcedure
+      .input(z.object({ limit: z.number().default(6) }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return [];
+        return await db
+          .select()
+          .from(categories)
+          .orderBy(categories.order)
+          .limit(input.limit);
+      }),
     getBySlug: publicProcedure
       .input(z.object({ slug: z.string() }))
       .query(async ({ input }) => {

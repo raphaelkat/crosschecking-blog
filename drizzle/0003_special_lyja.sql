@@ -1,0 +1,2 @@
+ALTER TABLE `categories` ADD `views` int DEFAULT 0;--> statement-breakpoint
+ALTER TABLE `categories` DROP COLUMN `parentCategoryId`;

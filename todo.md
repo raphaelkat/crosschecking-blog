@@ -197,3 +197,11 @@
 - [ ] Migrate existing articles to valid new category assignments
 - [ ] Add automated tests for category navigation
 - [ ] Remove temporary categories.migrate endpoint and secure it
+
+
+## Homepage Popular Categories Section
+- [x] Create API endpoint to fetch popular categories
+- [x] Design popular categories section UI
+- [x] Add popular categories component to Home page
+- [x] Style with brand colors and icons
+- [x] Test responsive design on mobile/tablet

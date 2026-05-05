@@ -25,6 +25,7 @@ export default function Home() {
   }, []);
 
   const { data: categories, isLoading: categoriesLoading } = trpc.categories.list.useQuery();
+  const { data: popularCategories, isLoading: popularLoading } = trpc.categories.popular.useQuery({ limit: 6 });
   const { data: featuredArticles, isLoading: articlesLoading } = trpc.articles.list.useQuery({
     limit: 6,
     offset: 0,
@@ -87,6 +88,45 @@ export default function Home() {
               )}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Popular Categories */}
+      <section className="py-16 md:py-24 bg-gradient-to-r from-primary/10 to-accent/10">
+        <div className="container">
+          <div className="flex items-center justify-between mb-12">
+            <div>
+              <h2 className="text-4xl font-serif font-bold mb-2">Popular Categories</h2>
+              <p className="text-muted-foreground">Explore the most visited topics</p>
+            </div>
+            <Link href="/categories" className="flex items-center gap-2 text-accent hover:gap-3 transition-all">
+              View All <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          {popularLoading ? (
+            <div className="flex justify-center py-12">
+              <Loader2 className="animate-spin w-8 h-8" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {popularCategories?.map((cat) => (
+                <Link
+                  key={cat.id}
+                  href={`/category/${cat.slug}`}
+                  className="group p-6 rounded-lg border border-border bg-card hover:bg-accent/5 transition-all"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-semibold group-hover:text-accent transition-colors">{cat.name}</h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground line-clamp-2">{cat.description}</p>
+                  <div className="mt-4 flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                    Explore <ChevronRight className="w-4 h-4" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
