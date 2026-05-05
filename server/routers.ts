@@ -23,6 +23,66 @@ export const appRouter = router({
 
   // Categories
   categories: router({
+    migrate: protectedProcedure
+      .mutation(async ({ ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        
+        const newCategories = [
+          { name: "Tech & Gadgets", slug: "tech-gadgets", description: "Latest smartphones, laptops, and tech accessories", order: 1 },
+          { name: "Smartphones", slug: "smartphones", description: "Smartphone reviews and comparisons", order: 2 },
+          { name: "Laptops", slug: "laptops", description: "Laptop reviews and buying guides", order: 3 },
+          { name: "Accessories", slug: "tech-accessories", description: "Tech accessories and gadgets", order: 4 },
+          { name: "AI Tools & Automation", slug: "ai-tools-automation", description: "AI tools, chatbots, and automation platforms", order: 5 },
+          { name: "Online Business & Side Hustles", slug: "online-business-side-hustles", description: "Dropshipping, freelancing, and passive income tools", order: 6 },
+          { name: "Dropshipping", slug: "dropshipping", description: "Dropshipping platforms and tools", order: 7 },
+          { name: "Freelancing Platforms", slug: "freelancing-platforms", description: "Freelancing marketplaces and tools", order: 8 },
+          { name: "Passive Income Tools", slug: "passive-income-tools", description: "Tools for generating passive income", order: 9 },
+          { name: "E-commerce & Marketing", slug: "ecommerce-marketing", description: "E-commerce platforms and marketing tools", order: 10 },
+          { name: "Web Hosting & Domains", slug: "web-hosting-domains", description: "Web hosting providers and domain registrars", order: 11 },
+          { name: "Software & SaaS Tools", slug: "software-saas-tools", description: "CRM, marketing tools, productivity apps", order: 12 },
+          { name: "CRM Tools", slug: "crm-tools", description: "Customer Relationship Management solutions", order: 13 },
+          { name: "Marketing Tools", slug: "marketing-tools", description: "Marketing automation and analytics tools", order: 14 },
+          { name: "Productivity Apps", slug: "productivity-apps", description: "Productivity and collaboration tools", order: 15 },
+          { name: "Online Courses & Education Platforms", slug: "online-courses-education", description: "Online learning platforms and courses", order: 16 },
+          { name: "Digital Marketing Tools", slug: "digital-marketing-tools", description: "SEO tools, email marketing, ads platforms", order: 17 },
+          { name: "SEO Tools", slug: "seo-tools", description: "Search engine optimization tools", order: 18 },
+          { name: "Email Marketing", slug: "email-marketing", description: "Email marketing platforms", order: 19 },
+          { name: "Ads Platforms", slug: "ads-platforms", description: "Advertising platforms and tools", order: 20 },
+          { name: "Payment Solutions & Mobile Money", slug: "payment-solutions-mobile-money", description: "Payment gateways and mobile money services", order: 21 },
+          { name: "Apps & Mobile Tools", slug: "apps-mobile-tools", description: "Top apps and mobile productivity tools", order: 22 },
+          { name: "Gaming & Entertainment Platforms", slug: "gaming-entertainment-platforms", description: "Gaming platforms and entertainment services", order: 23 },
+          { name: "Streaming Services and Big Events", slug: "streaming-services-big-events", description: "Netflix alternatives and streaming platforms", order: 24 },
+          { name: "Travel & Booking Platforms", slug: "travel-booking-platforms", description: "Flight, hotel, and travel booking tools", order: 25 },
+          { name: "Flight Booking", slug: "flight-booking", description: "Flight booking platforms", order: 26 },
+          { name: "Hotel Booking", slug: "hotel-booking", description: "Hotel booking platforms", order: 27 },
+          { name: "World Travel Tools", slug: "world-travel-tools", description: "International travel tools", order: 28 },
+          { name: "African Travel Tools", slug: "african-travel-tools", description: "African travel and booking platforms", order: 29 },
+          { name: "Health & Fitness Apps/Tools", slug: "health-fitness-apps-tools", description: "Wearables, diet apps, and gym tools", order: 30 },
+          { name: "Wearables", slug: "wearables", description: "Wearable devices and smartwatches", order: 31 },
+          { name: "Diet Apps", slug: "diet-apps", description: "Nutrition and diet tracking apps", order: 32 },
+          { name: "Gym Tools", slug: "gym-tools", description: "Fitness and gym management tools", order: 33 },
+          { name: "Lifestyle Products & Services", slug: "lifestyle-products-services", description: "Home tech, personal productivity, real estate", order: 34 },
+          { name: "Home Tech", slug: "home-tech", description: "Smart home technology and devices", order: 35 },
+          { name: "Personal Productivity", slug: "personal-productivity", description: "Personal productivity tools and services", order: 36 },
+          { name: "Real Estate", slug: "real-estate", description: "Real estate platforms and tools", order: 37 },
+        ];
+        
+        await db.delete(categories);
+        
+        for (const cat of newCategories) {
+          const { order, name, slug, description } = cat;
+          await db.insert(categories).values({
+            name,
+            slug,
+            description,
+            order,
+          });
+        }
+        
+        return { success: true, count: newCategories.length };
+      }),
     list: publicProcedure.query(async () => {
       const db = await getDb();
       if (!db) return [];

@@ -184,3 +184,16 @@
 - [x] Ensure logo appears in all appropriate locations
 - [x] Test responsive design with new logo
 - [x] Verify favicon displays on all devices
+
+
+## Category & Subcategory Updates
+- [x] Update categories in database with new 15 main categories
+- [ ] Implement real subcategory support in schema/API
+- [x] Update Header component with new categories
+- [ ] Update Home page category display with new taxonomy
+- [x] Update Footer with category links
+- [ ] Update category page routing for new categories
+- [ ] Update search filters with new categories
+- [ ] Migrate existing articles to valid new category assignments
+- [ ] Add automated tests for category navigation
+- [ ] Remove temporary categories.migrate endpoint and secure it

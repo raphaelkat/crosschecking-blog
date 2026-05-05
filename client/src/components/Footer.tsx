@@ -13,8 +13,15 @@ const FOOTER_LINKS = {
   ],
   resources: [
     { label: "Blog", href: "/" },
-    { label: "Categories", href: "/" },
     { label: "Search", href: "/search" },
+  ],
+  categories: [
+    { label: "Tech & Gadgets", href: "/category/tech-gadgets" },
+    { label: "AI Tools", href: "/category/ai-tools-automation" },
+    { label: "Online Business", href: "/category/online-business-side-hustles" },
+    { label: "E-commerce", href: "/category/ecommerce-marketing" },
+    { label: "SaaS Tools", href: "/category/software-saas-tools" },
+    { label: "Travel", href: "/category/travel-booking-platforms" },
   ],
 };
 
@@ -103,7 +110,7 @@ export default function Footer() {
     <footer className="bg-background border-t border-border mt-20">
       <div className="container mx-auto px-4 py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand Section */}
           <div>
             <h3 className="text-lg font-bold text-foreground mb-4">Crosschecking</h3>
@@ -149,6 +156,22 @@ export default function Footer() {
             <h4 className="font-semibold text-foreground mb-4">Legal</h4>
             <ul className="space-y-2">
               {FOOTER_LINKS.legal.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href}>
+                    <a className="text-sm text-muted-foreground hover:text-primary transition">
+                      {link.label}
+                    </a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Categories Links */}
+          <div>
+            <h4 className="font-semibold text-foreground mb-4">Categories</h4>
+            <ul className="space-y-2">
+              {FOOTER_LINKS.categories.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href}>
                     <a className="text-sm text-muted-foreground hover:text-primary transition">

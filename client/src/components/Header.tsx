@@ -7,11 +7,21 @@ import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 
 const CATEGORIES = [
-  { name: "AI & ML", slug: "ai-ml" },
-  { name: "SaaS", slug: "saas" },
-  { name: "E-commerce", slug: "ecommerce" },
-  { name: "Payment", slug: "payment" },
-  { name: "Web Dev", slug: "web-dev" },
+  { name: "Tech & Gadgets", slug: "tech-gadgets" },
+  { name: "AI Tools & Automation", slug: "ai-tools-automation" },
+  { name: "Online Business", slug: "online-business-side-hustles" },
+  { name: "E-commerce & Marketing", slug: "ecommerce-marketing" },
+  { name: "Web Hosting & Domains", slug: "web-hosting-domains" },
+  { name: "Software & SaaS", slug: "software-saas-tools" },
+  { name: "Online Courses", slug: "online-courses-education" },
+  { name: "Digital Marketing", slug: "digital-marketing-tools" },
+  { name: "Payment Solutions", slug: "payment-solutions-mobile-money" },
+  { name: "Apps & Mobile", slug: "apps-mobile-tools" },
+  { name: "Gaming & Entertainment", slug: "gaming-entertainment-platforms" },
+  { name: "Streaming Services", slug: "streaming-services-big-events" },
+  { name: "Travel & Booking", slug: "travel-booking-platforms" },
+  { name: "Health & Fitness", slug: "health-fitness-apps-tools" },
+  { name: "Lifestyle Products", slug: "lifestyle-products-services" },
 ];
 
 export default function Header() {
