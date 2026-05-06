@@ -56,14 +56,14 @@ export default function Search() {
           <h1 className="text-4xl font-serif font-bold mb-8">Search Articles</h1>
           
           <form onSubmit={handleSearch} className="flex flex-col gap-4">
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2">
               <Input
                 placeholder="Search articles, products, comparisons..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1"
+                className="flex-1 min-w-0"
               />
-              <Button type="submit" className="gap-2">
+              <Button type="submit" className="gap-2 w-full sm:w-auto">
                 <SearchIcon className="w-4 h-4" />
                 Search
               </Button>

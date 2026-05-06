@@ -40,15 +40,16 @@ export default function Categories() {
             </p>
 
             {/* Search Bar */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-2 justify-center mb-8 max-w-2xl mx-auto">
               <Input
                 placeholder="Search categories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="max-w-md"
+                className="flex-1 min-w-0"
               />
-              <Button variant="outline" size="icon">
-                <Search className="w-4 h-4" />
+              <Button className="w-full sm:w-auto">
+                <Search className="w-4 h-4 mr-2" />
+                Search
               </Button>
             </div>
 

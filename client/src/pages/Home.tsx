@@ -62,14 +62,14 @@ export default function Home() {
             </p>
 
             {/* Search Bar */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-2 justify-center mb-8 max-w-2xl mx-auto">
               <Input
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="max-w-md"
+                className="flex-1 min-w-0"
               />
-              <Button asChild>
+              <Button asChild className="w-full sm:w-auto">
                 <Link href={`/search?q=${encodeURIComponent(searchQuery)}`}>
                   Search
                 </Link>

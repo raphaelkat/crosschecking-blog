@@ -223,3 +223,12 @@
 - [x] Style with brand colors
 - [x] Test responsive design
 - [x] Add link to Categories page in header dropdown
+
+
+## Search Bar & Button Color Updates
+- [x] Align search input and button on same line
+- [x] Make search bar responsive on mobile
+- [x] Change all button colors to #0062d1
+- [x] Update CSS theme with new primary button color
+- [x] Test button colors across all pages
+- [x] Verify responsive design on mobile
