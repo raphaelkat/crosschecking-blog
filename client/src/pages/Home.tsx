@@ -235,8 +235,11 @@ export default function Home() {
             <Button 
               type="submit"
               disabled={subscribeStatus === "loading"}
-              className="w-full sm:w-auto"
+              className="w-full sm:w-auto flex items-center justify-center gap-2"
             >
+              {subscribeStatus === "loading" && (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              )}
               {subscribeStatus === "loading" ? "Subscribing..." : "Subscribe"}
             </Button>
           </form>
