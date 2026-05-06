@@ -12,6 +12,7 @@ import Category from "./pages/Category";
 import AdminDashboard from "./pages/AdminDashboard";
 import ArticleEditor from "./pages/ArticleEditor";
 import Search from "./pages/Search";
+import Categories from "./pages/Categories";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
         <Switch>
           <Route path={"\\"} component={Home} />
           <Route path={"/search"} component={Search} />
+          <Route path={"/categories"} component={Categories} />
           <Route path={"/article/:slug"} component={Article} />
           <Route path={"/category/:slug"} component={Category} />
           <Route path={"/admin"} component={AdminDashboard} />

@@ -100,6 +100,15 @@ export default function Header() {
                       </Link>
                     );
                   })}
+                  <div className="border-t border-border my-1" />
+                  <Link 
+                    href="/categories"
+                    onClick={() => setCategoriesDropdownOpen(false)}
+                  >
+                    <button className="w-full text-left px-4 py-2 text-sm text-accent font-semibold hover:bg-accent/10 transition duration-150">
+                      View All Categories
+                    </button>
+                  </Link>
                 </div>
               )}
             </div>

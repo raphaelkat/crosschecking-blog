@@ -212,3 +212,14 @@
 - [x] Display icons in popular categories cards
 - [ ] Display icons in category dropdown menu
 - [ ] Display icons in footer category links
+
+
+## Categories Listing Page
+- [x] Create Categories.tsx page component
+- [x] Add route to App.tsx
+- [x] Display all categories in grid layout
+- [x] Show category icons and descriptions
+- [x] Add search/filter functionality
+- [x] Style with brand colors
+- [x] Test responsive design
+- [x] Add link to Categories page in header dropdown
