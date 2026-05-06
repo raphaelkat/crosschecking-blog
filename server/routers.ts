@@ -272,6 +272,32 @@ export const appRouter = router({
         };
       }),
 
+    suggestions: publicProcedure
+      .input(z.object({ query: z.string().min(1), limit: z.number().default(5) }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return [];
+        
+        const conditions: any[] = [eq(articles.status, "published")];
+        
+        conditions.push(
+          sql`(${articles.title} LIKE ${`%${input.query}%`} OR ${articles.excerpt} LIKE ${`%${input.query}%`})`
+        );
+        
+        return await db
+          .select({
+            id: articles.id,
+            title: articles.title,
+            slug: articles.slug,
+            excerpt: articles.excerpt,
+            featuredImage: articles.featuredImage,
+          })
+          .from(articles)
+          .where(and(...conditions))
+          .orderBy(desc(articles.publishedAt))
+          .limit(input.limit);
+      }),
+
     trending: publicProcedure
       .input(z.object({ limit: z.number().default(5) }))
       .query(async ({ input }) => {

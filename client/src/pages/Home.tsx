@@ -7,6 +7,7 @@ import { Link } from "wouter";
 import { useTheme } from "@/contexts/ThemeContext";
 import { setMetaTags } from "@/lib/seo";
 import { getCategoryIcon } from "@/lib/categoryIcons";
+import SearchBar from "@/components/SearchBar";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -62,18 +63,13 @@ export default function Home() {
             </p>
 
             {/* Search Bar */}
-            <div className="flex flex-col sm:flex-row gap-2 justify-center mb-8 max-w-2xl mx-auto">
-              <Input
+            <div className="max-w-2xl mx-auto">
+              <SearchBar
                 placeholder="Search articles..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 min-w-0"
+                onSearch={(query) => {
+                  window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                }}
               />
-              <Button asChild className="w-full sm:w-auto">
-                <Link href={`/search?q=${encodeURIComponent(searchQuery)}`}>
-                  Search
-                </Link>
-              </Button>
             </div>
 
             {/* Category Pills */}
