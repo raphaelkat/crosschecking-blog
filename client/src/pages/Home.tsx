@@ -218,10 +218,10 @@ export default function Home() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-16 md:py-24 bg-primary text-primary-foreground">
+      <section className="py-16 md:py-24 bg-white text-foreground">
         <div className="container max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-serif font-bold mb-4 text-primary-foreground">Stay Updated</h2>
-          <p className="text-lg mb-8 opacity-90">Get the latest comparison articles and insights delivered to your inbox.</p>
+          <h2 className="text-4xl font-serif font-bold mb-4 text-foreground">Stay Updated</h2>
+          <p className="text-lg mb-8 text-muted-foreground">Get the latest comparison articles and insights delivered to your inbox.</p>
           
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
             <Input
@@ -229,13 +229,13 @@ export default function Home() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-primary-foreground text-primary placeholder-primary/50"
+              className="flex-1 min-w-0"
               required
             />
             <Button 
-              type="submit" 
-              variant="secondary"
+              type="submit"
               disabled={subscribeStatus === "loading"}
+              className="w-full sm:w-auto"
             >
               {subscribeStatus === "loading" ? "Subscribing..." : "Subscribe"}
             </Button>
