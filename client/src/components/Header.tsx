@@ -50,7 +50,7 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-background border-b border-border shadow-sm">
+    <header className="sticky top-0 z-50 border-b border-border shadow-sm" style={{ backgroundColor: '#e2e3e8' }}>
       <div className="container mx-auto px-4 py-3">
         {/* Top Row: Logo + Actions */}
         <div className="flex items-center justify-between gap-4 mb-4">
@@ -81,7 +81,7 @@ export default function Header() {
 
               {/* Dropdown Menu */}
               {categoriesDropdownOpen && (
-                <div className="absolute right-0 mt-1 w-48 bg-card border border-border rounded-lg shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-1 w-48 bg-background border border-border rounded-lg shadow-lg py-1 z-50">
                   {CATEGORIES.map((category) => {
                     const isActive = currentCategorySlug === category.slug;
                     return (

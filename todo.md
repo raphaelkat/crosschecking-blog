@@ -243,3 +243,24 @@
 - [x] Add debouncing to search input
 - [x] Test suggestions on all search pages
 - [x] Verify mobile responsiveness
+
+
+## Header & Footer Styling & Fixes
+- [x] Change header background color to #e2e3e8
+- [x] Change footer background color to #e2e3e8
+- [x] Remove duplicate footer rendering
+- [x] Make logo clickable to redirect to home page
+- [ ] Verify light/dark mode toggle works correctly
+- [ ] Test color scheme in both light and dark modes
+
+## Popular Categories Carousel
+- [x] Convert popular categories from list to carousel
+- [ ] Add carousel navigation (prev/next buttons)
+- [ ] Add carousel indicators/dots
+- [ ] Make carousel responsive on mobile
+- [ ] Add smooth transitions between slides
+
+## Newsletter Section Styling
+- [x] Change "Stay Updated" text color from blue to default
+- [x] Keep "Subscribe" button in blue (#0062d1)
+- [x] Verify newsletter section styling

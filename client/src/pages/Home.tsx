@@ -106,25 +106,29 @@ export default function Home() {
               <Loader2 className="animate-spin w-8 h-8" />
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {popularCategories?.map((cat) => (
-                <Link
-                  key={cat.id}
-                  href={`/category/${cat.slug}`}
-                  className="group p-6 rounded-lg border border-border bg-card hover:bg-accent/5 transition-all"
-                >
-                  <div className="flex items-start gap-4 mb-3">
-                    <div className="text-accent group-hover:text-accent/80 transition-colors flex-shrink-0">
-                      {getCategoryIcon(cat.slug)}
-                    </div>
-                    <h3 className="text-lg font-semibold group-hover:text-accent transition-colors flex-1">{cat.name}</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground line-clamp-2 ml-12">{cat.description}</p>
-                  <div className="mt-4 flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity">
-                    Explore <ChevronRight className="w-4 h-4" />
-                  </div>
-                </Link>
-              ))}
+            <div className="relative">
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex gap-6 pb-4 min-w-max">
+                  {popularCategories?.map((cat) => (
+                    <Link
+                      key={cat.id}
+                      href={`/category/${cat.slug}`}
+                      className="group flex-shrink-0 w-80 p-6 rounded-lg border border-border bg-card hover:bg-accent/5 transition-all"
+                    >
+                      <div className="flex items-start gap-4 mb-3">
+                        <div className="text-accent group-hover:text-accent/80 transition-colors flex-shrink-0">
+                          {getCategoryIcon(cat.slug)}
+                        </div>
+                        <h3 className="text-lg font-semibold group-hover:text-accent transition-colors flex-1">{cat.name}</h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground line-clamp-2 ml-12">{cat.description}</p>
+                      <div className="mt-4 flex items-center gap-2 text-accent opacity-0 group-hover:opacity-100 transition-opacity">
+                        Explore <ChevronRight className="w-4 h-4" />
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -216,7 +220,7 @@ export default function Home() {
       {/* Newsletter CTA */}
       <section className="py-16 md:py-24 bg-primary text-primary-foreground">
         <div className="container max-w-2xl mx-auto text-center">
-          <h2 className="text-4xl font-serif font-bold mb-4">Stay Updated</h2>
+          <h2 className="text-4xl font-serif font-bold mb-4 text-primary-foreground">Stay Updated</h2>
           <p className="text-lg mb-8 opacity-90">Get the latest comparison articles and insights delivered to your inbox.</p>
           
           <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -246,46 +250,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-12">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <h4 className="font-bold mb-4">Crosschecking</h4>
-              <p className="text-sm text-muted-foreground">High-authority comparison and review articles for informed decision-making.</p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Categories</h4>
-              <ul className="space-y-2 text-sm">
-                {categories?.slice(0, 4).map((cat) => (
-                  <li key={cat.id}>
-                    <Link href={`/category/${cat.slug}`} className="text-muted-foreground hover:text-accent transition-colors">
-                      {cat.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="/sitemap.xml" className="text-muted-foreground hover:text-accent transition-colors">Sitemap</a></li>
-                <li><a href="/robots.txt" className="text-muted-foreground hover:text-accent transition-colors">Robots.txt</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm">
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="text-muted-foreground hover:text-accent transition-colors">Disclaimer</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-            <p>&copy; 2026 Crosschecking.Blog. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }
