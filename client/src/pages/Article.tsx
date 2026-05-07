@@ -10,6 +10,7 @@ import { TableOfContents } from "@/components/TableOfContents";
 import { ProsCons } from "@/components/ProsCons";
 import { FAQ } from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import ShareButtons from "@/components/ShareButtons";
 
 export default function Article() {
   const [location] = useLocation();
@@ -145,6 +146,15 @@ export default function Article() {
           {/* Main Content */}
           <div className="prose prose-lg max-w-none mb-12">
             <Streamdown>{article.content as string}</Streamdown>
+          </div>
+
+          {/* Share Buttons */}
+          <div className="my-12 py-6 border-t border-border">
+            <ShareButtons
+              title={article.title}
+              url={window.location.href}
+              description={article.excerpt || undefined}
+            />
           </div>
 
           {/* Affiliate Disclosure */}

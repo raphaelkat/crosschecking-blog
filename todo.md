@@ -292,3 +292,17 @@
 - [ ] Style with brand colors
 - [ ] Make carousels responsive on mobile
 - [ ] Add smooth transitions between slides
+
+
+## Article Social Share Buttons
+- [x] Create ShareButtons component for articles
+- [x] Add Twitter share button with article title and link
+- [x] Add Facebook share button
+- [x] Add LinkedIn share button
+- [x] Add WhatsApp share button
+- [x] Add native share button (Web Share API)
+- [x] Integrate ShareButtons in Article page
+- [x] Style buttons with social brand colors
+- [x] Add hover effects and animations
+- [x] Test share functionality on all platforms
+- [x] Verify mobile responsiveness
