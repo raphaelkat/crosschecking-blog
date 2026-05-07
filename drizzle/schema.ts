@@ -75,6 +75,7 @@ export const articles = mysqlTable("articles", {
   tableOfContents: json("tableOfContents"),
   // Engagement tracking
   viewCount: int("viewCount").default(0),
+  shareCount: int("shareCount").default(0),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });

@@ -306,3 +306,15 @@
 - [x] Add hover effects and animations
 - [x] Test share functionality on all platforms
 - [x] Verify mobile responsiveness
+
+
+## Share Counters Feature
+- [x] Add shares field to articles table in database
+- [x] Create API endpoint to increment share count
+- [x] Create API endpoint to get share count for article
+- [x] Update ShareButtons component to display share count
+- [x] Increment counter when user clicks share button
+- [x] Display counter next to each social media button
+- [ ] Add animation when counter increments
+- [x] Store share counts in database
+- [x] Test share counter functionality

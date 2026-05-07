@@ -226,6 +226,51 @@ export const appRouter = router({
         };
       }),
 
+    migrateShareCount: publicProcedure
+      .mutation(async () => {
+        const db = await getDb();
+        if (!db) return { success: false };
+        
+        try {
+          await db.execute(sql`ALTER TABLE articles ADD COLUMN shareCount int DEFAULT 0`);
+          return { success: true, message: 'shareCount column added' };
+        } catch (error: any) {
+          if (error.code === 'ER_DUP_FIELDNAME') {
+            return { success: true, message: 'shareCount column already exists' };
+          }
+          return { success: false, error: error.message };
+        }
+      }),
+
+    incrementShare: publicProcedure
+      .input(z.object({ articleId: z.number() }))
+      .mutation(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return { success: false };
+        
+        await db
+          .update(articles)
+          .set({ shareCount: sql`${articles.shareCount} + 1` })
+          .where(eq(articles.id, input.articleId));
+        
+        return { success: true };
+      }),
+
+    getShareCount: publicProcedure
+      .input(z.object({ articleId: z.number() }))
+      .query(async ({ input }) => {
+        const db = await getDb();
+        if (!db) return { shareCount: 0 };
+        
+        const result = await db
+          .select({ shareCount: articles.shareCount })
+          .from(articles)
+          .where(eq(articles.id, input.articleId))
+          .limit(1);
+        
+        return result[0] || { shareCount: 0 };
+      }),
+
     search: publicProcedure
       .input(
         z.object({

@@ -154,6 +154,7 @@ export default function Article() {
               title={article.title}
               url={window.location.href}
               description={article.excerpt || undefined}
+              articleId={article.id}
             />
           </div>
 

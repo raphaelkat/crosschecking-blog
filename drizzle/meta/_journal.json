@@ -29,6 +29,13 @@
       "when": 1777966539105,
       "tag": "0003_special_lyja",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1778123104049,
+      "tag": "0004_mean_gunslinger",
+      "breakpoints": true
     }
   ]
 }
