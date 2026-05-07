@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, Search, ChevronRight } from "lucide-react";
+import { Loader2, Search, ChevronRight, CheckCircle, AlertCircle } from "lucide-react";
 import { Link } from "wouter";
 import { useTheme } from "@/contexts/ThemeContext";
 import { setMetaTags } from "@/lib/seo";
@@ -44,10 +44,12 @@ export default function Home() {
       await subscribeNewsletter.mutateAsync({ email });
       setSubscribeStatus("success");
       setEmail("");
-      setTimeout(() => setSubscribeStatus("idle"), 3000);
+      // Keep success message visible for 5 seconds
+      setTimeout(() => setSubscribeStatus("idle"), 5000);
     } catch (error) {
       setSubscribeStatus("error");
-      setTimeout(() => setSubscribeStatus("idle"), 3000);
+      // Keep error message visible for 5 seconds
+      setTimeout(() => setSubscribeStatus("idle"), 5000);
     }
   };
 
@@ -245,10 +247,32 @@ export default function Home() {
           </form>
 
           {subscribeStatus === "success" && (
-            <p className="text-sm mt-4">✓ Successfully subscribed!</p>
+            <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-3">
+              <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-green-900">Successfully subscribed!</p>
+                <p className="text-sm text-green-700">Check your email for confirmation.</p>
+              </div>
+            </div>
           )}
           {subscribeStatus === "error" && (
-            <p className="text-sm mt-4">Error subscribing. Please try again.</p>
+            <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-red-900">Subscription failed</p>
+                  <p className="text-sm text-red-700">Please try again later.</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => setSubscribeStatus("idle")}
+                variant="outline"
+                size="sm"
+                className="flex-shrink-0 text-red-600 border-red-300 hover:bg-red-100"
+              >
+                Try again
+              </Button>
+            </div>
           )}
         </div>
       </section>

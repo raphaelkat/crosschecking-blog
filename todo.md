@@ -272,3 +272,23 @@
 - [x] Disable button during submission
 - [x] Add smooth transition effects
 - [x] Test animation on all devices
+
+
+## Newsletter Confirmation & Error Handling
+- [x] Display clear confirmation message after successful subscription
+- [x] Keep user on page after subscription success
+- [x] Show error message with retry option on failure
+- [ ] Add toast notifications for better UX
+- [x] Auto-dismiss success message after 5 seconds
+- [x] Add visual feedback (checkmark icon for success, error icon for failure)
+
+## Testimonials & Partnerships Carousel
+- [ ] Create testimonials carousel component
+- [ ] Create partnerships/logos carousel component
+- [ ] Add testimonials to database (or mock data)
+- [ ] Add partner logos to database (or mock data)
+- [ ] Design carousel with navigation buttons
+- [ ] Add carousel indicators/dots
+- [ ] Style with brand colors
+- [ ] Make carousels responsive on mobile
+- [ ] Add smooth transitions between slides
