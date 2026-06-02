@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { getDb, getUserByOpenId } from "./db";
-import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments } from "../drizzle/schema";
+import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships } from "../drizzle/schema";
 import { eq, desc, like, and } from "drizzle-orm";
 import { z } from "zod";
 import { sql } from "drizzle-orm";
@@ -683,6 +683,138 @@ export const appRouter = router({
         .where(eq(comments.isApproved, false))
         .orderBy(desc(comments.createdAt));
     }),
+  }),
+
+  // Testimonials
+  testimonials: router({
+    list: publicProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db
+        .select()
+        .from(testimonials)
+        .where(eq(testimonials.isActive, true))
+        .orderBy(testimonials.order);
+    }),
+
+    listAll: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(testimonials).orderBy(testimonials.order);
+    }),
+
+    create: protectedProcedure
+      .input(z.object({
+        authorName: z.string(),
+        authorTitle: z.string().optional(),
+        authorImage: z.string().optional(),
+        content: z.string(),
+        rating: z.number().min(1).max(5).default(5),
+        order: z.number().default(0),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        await db.insert(testimonials).values(input);
+        return { success: true };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        authorName: z.string().optional(),
+        authorTitle: z.string().optional(),
+        authorImage: z.string().optional(),
+        content: z.string().optional(),
+        rating: z.number().min(1).max(5).optional(),
+        isActive: z.boolean().optional(),
+        order: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        const { id, ...updates } = input;
+        await db.update(testimonials).set(updates).where(eq(testimonials.id, id));
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        await db.delete(testimonials).where(eq(testimonials.id, input.id));
+        return { success: true };
+      }),
+  }),
+
+  // Partnerships
+  partnerships: router({
+    list: publicProcedure.query(async () => {
+      const db = await getDb();
+      if (!db) return [];
+      return await db
+        .select()
+        .from(partnerships)
+        .where(eq(partnerships.isActive, true))
+        .orderBy(partnerships.order);
+    }),
+
+    listAll: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(partnerships).orderBy(partnerships.order);
+    }),
+
+    create: protectedProcedure
+      .input(z.object({
+        partnerName: z.string(),
+        partnerLogo: z.string(),
+        partnerUrl: z.string().optional(),
+        description: z.string().optional(),
+        order: z.number().default(0),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        await db.insert(partnerships).values(input);
+        return { success: true };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        partnerName: z.string().optional(),
+        partnerLogo: z.string().optional(),
+        partnerUrl: z.string().optional(),
+        description: z.string().optional(),
+        isActive: z.boolean().optional(),
+        order: z.number().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        const { id, ...updates } = input;
+        await db.update(partnerships).set(updates).where(eq(partnerships.id, id));
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        await db.delete(partnerships).where(eq(partnerships.id, input.id));
+        return { success: true };
+      }),
   }),
 });
 

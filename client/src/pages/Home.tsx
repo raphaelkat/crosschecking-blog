@@ -8,6 +8,8 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { setMetaTags } from "@/lib/seo";
 import { getCategoryIcon } from "@/lib/categoryIcons";
 import SearchBar from "@/components/SearchBar";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
+import PartnershipsCarousel from "@/components/PartnershipsCarousel";
 
 export default function Home() {
   const { theme, toggleTheme } = useTheme();
@@ -277,7 +279,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Testimonials Carousel */}
+      <TestimonialsCarousel />
 
+      {/* Partnerships Carousel */}
+      <PartnershipsCarousel />
     </div>
   );
 }

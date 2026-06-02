@@ -137,3 +137,37 @@ export const comments = mysqlTable("comments", {
 
 export type Comment = typeof comments.$inferSelect;
 export type InsertComment = typeof comments.$inferInsert;
+
+
+// Testimonials table
+export const testimonials = mysqlTable("testimonials", {
+  id: int("id").autoincrement().primaryKey(),
+  authorName: varchar("authorName", { length: 255 }).notNull(),
+  authorTitle: varchar("authorTitle", { length: 255 }),
+  authorImage: varchar("authorImage", { length: 500 }),
+  content: text("content").notNull(),
+  rating: int("rating").default(5),
+  isActive: boolean("isActive").default(true),
+  order: int("order").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Testimonial = typeof testimonials.$inferSelect;
+export type InsertTestimonial = typeof testimonials.$inferInsert;
+
+// Partnerships table
+export const partnerships = mysqlTable("partnerships", {
+  id: int("id").autoincrement().primaryKey(),
+  partnerName: varchar("partnerName", { length: 255 }).notNull(),
+  partnerLogo: varchar("partnerLogo", { length: 500 }).notNull(),
+  partnerUrl: varchar("partnerUrl", { length: 500 }),
+  description: varchar("description", { length: 500 }),
+  isActive: boolean("isActive").default(true),
+  order: int("order").default(0),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Partnership = typeof partnerships.$inferSelect;
+export type InsertPartnership = typeof partnerships.$inferInsert;

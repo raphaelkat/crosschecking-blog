@@ -283,15 +283,15 @@
 - [x] Add visual feedback (checkmark icon for success, error icon for failure)
 
 ## Testimonials & Partnerships Carousel
-- [ ] Create testimonials carousel component
-- [ ] Create partnerships/logos carousel component
-- [ ] Add testimonials to database (or mock data)
-- [ ] Add partner logos to database (or mock data)
-- [ ] Design carousel with navigation buttons
-- [ ] Add carousel indicators/dots
-- [ ] Style with brand colors
-- [ ] Make carousels responsive on mobile
-- [ ] Add smooth transitions between slides
+- [x] Create testimonials carousel component
+- [x] Create partnerships/logos carousel component
+- [x] Add testimonials to database (or mock data)
+- [x] Add partner logos to database (or mock data)
+- [x] Design carousel with navigation buttons
+- [x] Add carousel indicators/dots
+- [x] Style with brand colors
+- [x] Make carousels responsive on mobile
+- [x] Add smooth transitions between slides
 
 
 ## Article Social Share Buttons
