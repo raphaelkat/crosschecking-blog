@@ -22,9 +22,12 @@ export default function Article() {
 
   const { data: article, isLoading } = trpc.articles.getBySlug.useQuery({ slug: slug || "" });
 
-  // Set SEO meta tags and schema
+  // Set SEO meta tags and schema, scroll to top
   useEffect(() => {
     if (article) {
+      // Scroll to top when article loads
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      
       setMetaTags({
         title: article.metaTitle || article.title,
         description: article.metaDescription || article.excerpt || "",
@@ -46,15 +49,20 @@ export default function Article() {
       });
     }
   }, [article]);
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location]);
+
   const { data: relatedArticles } = trpc.articles.related.useQuery(
-    { articleId: article?.id || 0, limit: 3 },
-    { enabled: !!article?.id }
+    { articleId: article?.id || 0, limit: 6 },
+    { enabled: !!article?.id, staleTime: 1000 * 60 * 5 }
   );
-  const { data: comments } = trpc.comments.listByArticle.useQuery(
+  const { data: comments = [] } = trpc.comments.listByArticle.useQuery(
     { articleId: article?.id || 0 },
     { enabled: !!article?.id }
   );
-  const createComment = trpc.comments.create.useMutation();
+  const submitComment = trpc.comments.create.useMutation();
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,7 +70,7 @@ export default function Article() {
 
     setCommentStatus("loading");
     try {
-      await createComment.mutateAsync({
+      await submitComment.mutateAsync({
         articleId: article.id,
         authorName: commentAuthor,
         authorEmail: commentEmail,
@@ -85,6 +93,11 @@ export default function Article() {
         <Loader2 className="animate-spin w-8 h-8" />
       </div>
     );
+  }
+
+  // Ensure we scroll to top even if page was cached
+  if (typeof window !== 'undefined' && window.scrollY > 0) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }
 
   if (!article) {

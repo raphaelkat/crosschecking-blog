@@ -81,7 +81,7 @@ export default function Header() {
 
               {/* Dropdown Menu */}
               {categoriesDropdownOpen && (
-                <div className="absolute right-0 mt-1 w-48 bg-background border border-border rounded-lg shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-1 w-48 bg-card border-2 border-border rounded-lg shadow-xl py-1 z-50 max-h-[60vh] overflow-y-auto">
                   {CATEGORIES.map((category) => {
                     const isActive = currentCategorySlug === category.slug;
                     return (
@@ -165,7 +165,7 @@ export default function Header() {
         </div>
 
         {/* Category Navigation - Mobile */}
-        <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:hidden`}>
+        <nav className={`${mobileMenuOpen ? "block" : "hidden"} md:hidden max-h-[70vh] overflow-y-auto`}>
           <div className="flex flex-col gap-1">
             {CATEGORIES.map((category) => {
               const isActive = currentCategorySlug === category.slug;

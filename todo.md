@@ -318,3 +318,65 @@
 - [ ] Add animation when counter increments
 - [x] Store share counts in database
 - [x] Test share counter functionality
+
+
+## CRITICAL FIXES - Phase 1: Scroll & Menu
+- [x] Fix article page scroll position (load from top)
+- [x] Fix menu scrolling behavior (independent scroll, no page scroll)
+- [x] Test scroll behavior on desktop, mobile, tablet
+
+## CRITICAL FIXES - Phase 2: Editor Management
+- [ ] Create editor account management interface
+- [ ] Add editor creation fields (email, password, name, photo, bio)
+- [ ] Implement author display box on articles
+- [ ] Add author archive pages (/author/author-name)
+- [ ] Display author social links on articles
+
+## CRITICAL FIXES - Phase 3: SEO & Slugs
+- [ ] Improve related articles section (6+ articles)
+- [ ] Implement category-based URL structure (/category/article-slug)
+- [ ] Implement modern slug generation rules (lowercase, hyphens, no special chars)
+- [ ] Fix SEO category-based slugs for all articles
+
+## CRITICAL FIXES - Phase 4: Theme & Styling
+- [ ] Verify light/dark mode toggle works globally
+- [ ] Ensure theme preference persists in browser storage
+- [ ] Fix any unreadable text colors in both themes
+- [ ] Fix dropdown menu background and z-index
+- [ ] Add proper shadow and border radius to dropdowns
+
+## CRITICAL FIXES - Phase 5: Editor Features
+- [ ] Add featured image preview in editor
+- [ ] Add replace/remove image buttons
+- [ ] Replace current editor with Markdown editor (EditorJS/TipTap/MDX)
+- [ ] Implement manual TOC block in editor
+- [ ] Add code blocks, tables, image upload support
+
+## CRITICAL FIXES - Phase 6: End-of-Article
+- [ ] Add newsletter CTA section at end of articles
+- [ ] Add Facebook page CTA
+- [ ] Add social media follow CTAs (X, Facebook, LinkedIn, YouTube, Instagram)
+- [ ] Ensure present on all articles
+
+## CRITICAL FIXES - Phase 7: Schema & Gallery
+- [ ] Implement Product schema markup
+- [ ] Implement Review schema markup
+- [ ] Implement Article schema markup
+- [ ] Implement FAQ schema markup
+- [ ] Create image gallery system with lightbox
+- [ ] Add gallery editor controls
+
+## CRITICAL FIXES - Phase 8: Advanced Features
+- [ ] Create breadcrumb navigation with schema
+- [ ] Implement internal linking engine
+- [ ] Add performance optimization (Lighthouse ≥90)
+- [ ] Improve accessibility (≥95)
+- [ ] Improve SEO score (≥95)
+
+## CRITICAL FIXES - Phase 9: Audits & Testing
+- [ ] Full frontend audit (broken links, layout, responsiveness, CLS, accessibility)
+- [ ] Full backend audit (validation, API, security)
+- [ ] Full SEO audit (metadata, duplicate URLs, canonical tags)
+- [ ] Performance audit with Lighthouse
+- [ ] Accessibility audit
+- [ ] Produce comprehensive implementation report
