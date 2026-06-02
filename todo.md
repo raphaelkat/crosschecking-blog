@@ -44,7 +44,7 @@
 ## Frontend - Category Pages
 - [x] Create category page template
 - [x] Implement category-specific article listings
-- [ ] Add filtering by subcategories and tags
+- [ ] Add filtering by subcategories and tags (deferred: requires schema enhancement)
 - [x] Create category hero section with description
 - [x] Add breadcrumb navigation
 
