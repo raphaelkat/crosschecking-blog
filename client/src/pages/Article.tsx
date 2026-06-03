@@ -11,6 +11,7 @@ import { ProsCons } from "@/components/ProsCons";
 import { FAQ } from "@/components/FAQ";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import ShareButtons from "@/components/ShareButtons";
+import { AuthorBox } from "@/components/AuthorBox";
 
 export default function Article() {
   const [location] = useLocation();
@@ -170,6 +171,11 @@ export default function Article() {
               articleId={article.id}
             />
           </div>
+
+          {/* Author Box */}
+          {article.author && (
+            <AuthorBox author={article.author} />
+          )}
 
           {/* Affiliate Disclosure */}
           <div className="affiliate-disclosure">

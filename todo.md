@@ -326,9 +326,9 @@
 - [x] Test scroll behavior on desktop, mobile, tablet
 
 ## CRITICAL FIXES - Phase 2: Editor Management
-- [ ] Create editor account management interface
-- [ ] Add editor creation fields (email, password, name, photo, bio)
-- [ ] Implement author display box on articles
+- [x] Create editor account management interface
+- [x] Add editor creation fields (email, password, name, photo, bio)
+- [x] Implement author display box on articles
 - [ ] Add author archive pages (/author/author-name)
 - [ ] Display author social links on articles
 

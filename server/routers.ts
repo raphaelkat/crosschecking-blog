@@ -3,7 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { getDb, getUserByOpenId } from "./db";
-import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships } from "../drizzle/schema";
+import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships, users } from "../drizzle/schema";
 import { eq, desc, like, and } from "drizzle-orm";
 import { z } from "zod";
 import { sql } from "drizzle-orm";
@@ -187,7 +187,7 @@ export const appRouter = router({
           ))
           .limit(1);
 
-        if (result.length === 0) return null;
+                if (result.length === 0) return null;
 
         const article = result[0];
 
@@ -196,6 +196,18 @@ export const appRouter = router({
           .select()
           .from(categories)
           .where(eq(categories.id, article.categoryId))
+          .limit(1);
+
+        // Get author
+        const authorResult = await db
+          .select({
+            id: users.id,
+            name: users.name,
+            profilePhoto: users.profilePhoto,
+            biography: users.biography,
+          })
+          .from(users)
+          .where(eq(users.id, article.authorId))
           .limit(1);
 
         // Get tags
@@ -221,6 +233,7 @@ export const appRouter = router({
         return {
           ...article,
           category: categoryResult[0] || null,
+          author: authorResult[0] || null,
           tags: articleTagsResult.map(r => r.tag),
           affiliateLinks: affiliates,
         };
@@ -813,6 +826,71 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database unavailable");
         await db.delete(partnerships).where(eq(partnerships.id, input.id));
+        return { success: true };
+      }),
+  }),
+
+  // Users/Editors Management
+  users: router({
+    list: protectedProcedure.query(async ({ ctx }) => {
+      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      const db = await getDb();
+      if (!db) return [];
+      return await db.select().from(users).orderBy(users.createdAt);
+    }),
+
+    create: protectedProcedure
+      .input(z.object({
+        email: z.string().email(),
+        name: z.string(),
+        role: z.enum(["user", "admin", "editor"]).default("editor"),
+        profilePhoto: z.string().optional(),
+        biography: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        
+        // Create a temporary openId for the new user
+        const tempOpenId = `editor-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        
+        await db.insert(users).values({
+          openId: tempOpenId,
+          email: input.email,
+          name: input.name,
+          role: input.role,
+          profilePhoto: input.profilePhoto,
+          biography: input.biography,
+          loginMethod: "admin-created",
+        });
+        return { success: true };
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().optional(),
+        role: z.enum(["user", "admin", "editor"]).optional(),
+        profilePhoto: z.string().optional(),
+        biography: z.string().optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        const { id, ...updates } = input;
+        await db.update(users).set(updates).where(eq(users.id, id));
+        return { success: true };
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+        await db.delete(users).where(eq(users.id, input.id));
         return { success: true };
       }),
   }),

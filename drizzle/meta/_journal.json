@@ -43,6 +43,13 @@
       "when": 1780394303913,
       "tag": "0005_sparkling_mojo",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1780398025159,
+      "tag": "0006_common_the_professor",
+      "breakpoints": true
     }
   ]
 }

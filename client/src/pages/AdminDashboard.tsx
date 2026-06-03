@@ -6,11 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Loader2, Plus, Edit2, Trash2, Eye } from "lucide-react";
 import { trpc } from "@/lib/trpc";
 import { Link } from "wouter";
+import AdminEditors from "./AdminEditors";
 
 export default function AdminDashboard() {
   const { user, loading: authLoading } = useAuth();
   const [, setLocation] = useLocation();
-  const [activeTab, setActiveTab] = useState<"articles" | "categories" | "comments">("articles");
+  const [activeTab, setActiveTab] = useState<"articles" | "categories" | "comments" | "editors">("articles");
 
   const { data: articles, isLoading: articlesLoading } = trpc.articles.list.useQuery({
     limit: 100,
@@ -96,6 +97,16 @@ export default function AdminDashboard() {
             }`}
           >
             Pending Comments ({pendingComments?.length || 0})
+          </button>
+          <button
+            onClick={() => setActiveTab("editors")}
+            className={`pb-4 px-2 font-bold transition-colors ${
+              activeTab === "editors"
+                ? "text-accent border-b-2 border-accent"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Editors & Users
           </button>
         </div>
 
@@ -228,6 +239,11 @@ export default function AdminDashboard() {
               <p className="text-muted-foreground">No pending comments.</p>
             )}
           </div>
+        )}
+
+        {/* Editors Tab */}
+        {activeTab === "editors" && (
+          <AdminEditors />
         )}
       </div>
     </div>
