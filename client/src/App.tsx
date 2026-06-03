@@ -31,7 +31,7 @@ function Router() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1" style={{ animation: 'pageEnter 400ms cubic-bezier(0.16, 1, 0.3, 1)' }}>
         <Switch>
           <Route path={"\\"} component={Home} />
           <Route path={"/search"} component={Search} />
