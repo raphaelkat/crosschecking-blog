@@ -434,3 +434,69 @@
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
   background-size: 1000px 100%;
 }
+
+
+/* Dark Mode Smooth Transitions */
+html {
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+html.dark {
+  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+}
+
+* {
+  @apply transition-colors duration-300;
+}
+
+/* Smooth transitions for specific elements */
+header, footer, main, nav, aside {
+  @apply transition-colors duration-300;
+}
+
+.dark header,
+.dark footer,
+.dark main,
+.dark nav,
+.dark aside {
+  @apply transition-colors duration-300;
+}
+
+/* Button transitions */
+button, [role="button"], input, select, textarea {
+  @apply transition-all duration-300;
+}
+
+/* Link transitions */
+a {
+  @apply transition-colors duration-300;
+}
+
+/* Theme toggle button animation */
+.theme-toggle-btn {
+  @apply transition-transform duration-300;
+}
+
+.theme-toggle-btn:hover {
+  @apply scale-110;
+}
+
+/* Smooth color transitions for cards */
+.card, .bg-card {
+  @apply transition-colors duration-300;
+}
+
+/* Smooth transitions for borders */
+.border, [class*="border-"] {
+  @apply transition-colors duration-300;
+}
+
+/* Background transitions */
+[class*="bg-"] {
+  @apply transition-colors duration-300;
+}
+
+/* Text color transitions */
+[class*="text-"] {
+  @apply transition-colors duration-300;
+}
