@@ -136,6 +136,44 @@ export const appRouter = router({
       if (!db) return [];
       return await db.select().from(tags);
     }),
+
+    create: protectedProcedure
+      .input(z.object({
+        name: z.string().min(1),
+        slug: z.string().min(1),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        const result = await db.insert(tags).values({
+          name: input.name,
+          slug: input.slug,
+        });
+        return result;
+      }),
+
+    update: protectedProcedure
+      .input(z.object({
+        id: z.number(),
+        name: z.string().min(1).optional(),
+        slug: z.string().min(1).optional(),
+      }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        const { id, ...updateData } = input;
+        const result = await db.update(tags).set(updateData).where(eq(tags.id, id));
+        return result;
+      }),
+
+    delete: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        const db = await getDb();
+        if (!db) throw new Error('Database not available');
+        const result = await db.delete(tags).where(eq(tags.id, input.id));
+        return result;
+      }),
   }),
 
   // Articles
