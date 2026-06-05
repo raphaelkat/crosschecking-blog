@@ -411,9 +411,9 @@
 - [x] Newsletter subscriber management interface (AdminNewsletterSubscribers.tsx created)
 - [x] Comments moderation system (AdminCommentModeration.tsx created)
 - [x] Author archive pages (AuthorArchive.tsx created)
-- [ ] Author social links on articles
-- [ ] Bulk operations in admin (publish, unpublish, delete)
-- [ ] Article preview functionality
+- [x] Author social links on articles (AuthorSocialLinks.tsx created)
+- [x] Bulk operations in admin (BulkOperations.tsx + backend procedures)
+- [x] Article preview functionality (ArticlePreview.tsx enhanced)
 - [ ] Analytics dashboard (views, engagement, conversions)
 - [ ] Image optimization and lazy loading
 - [ ] Core Web Vitals optimization (LCP, FID, CLS)

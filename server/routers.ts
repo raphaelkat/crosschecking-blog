@@ -6,7 +6,7 @@ import { translationRouter } from "./routers/translation";
 import { articlePublishRouter } from "./routers/articles-publish";
 import { getDb, getUserByOpenId } from "./db";
 import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships, users } from "../drizzle/schema";
-import { eq, desc, like, and } from "drizzle-orm";
+import { eq, desc, like, and, inArray } from "drizzle-orm";
 import { z } from "zod";
 import { sql } from "drizzle-orm";
 
@@ -322,6 +322,54 @@ export const appRouter = router({
           .limit(1);
         
         return result[0] || { shareCount: 0 };
+      }),
+
+    bulkPublish: protectedProcedure
+      .input(z.object({ ids: z.array(z.number()) }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+
+        for (const id of input.ids) {
+          await db
+            .update(articles)
+            .set({ status: "published", publishedAt: new Date() })
+            .where(eq(articles.id, id));
+        }
+
+        return { success: true, count: input.ids.length };
+      }),
+
+    bulkUnpublish: protectedProcedure
+      .input(z.object({ ids: z.array(z.number()) }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+
+        for (const id of input.ids) {
+          await db
+            .update(articles)
+            .set({ status: "draft" })
+            .where(eq(articles.id, id));
+        }
+
+        return { success: true, count: input.ids.length };
+      }),
+
+    bulkDelete: protectedProcedure
+      .input(z.object({ ids: z.array(z.number()) }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+
+        for (const id of input.ids) {
+          await db.delete(articles).where(eq(articles.id, id));
+        }
+
+        return { success: true, count: input.ids.length };
       }),
 
     search: publicProcedure
