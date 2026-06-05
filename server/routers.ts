@@ -3,6 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
 import { translationRouter } from "./routers/translation";
+import { articlePublishRouter } from "./routers/articles-publish";
 import { getDb, getUserByOpenId } from "./db";
 import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships, users } from "../drizzle/schema";
 import { eq, desc, like, and } from "drizzle-orm";
@@ -934,5 +935,6 @@ export const appRouter = router({
       }),
     }),
   translation: translationRouter,
+  articlePublish: articlePublishRouter,
 });
 export type AppRouter = typeof appRouter;
