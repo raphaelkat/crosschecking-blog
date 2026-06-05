@@ -658,6 +658,33 @@ export const appRouter = router({
         .from(newsletterSubscribers)
         .where(eq(newsletterSubscribers.isVerified, true));
     }),
+
+    listSubscribers: protectedProcedure
+      .input(z.object({}).optional())
+      .query(async ({ ctx }) => {
+      if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+      const db = await getDb();
+      if (!db) return [];
+
+      return await db
+        .select()
+        .from(newsletterSubscribers)
+        .orderBy(desc(newsletterSubscribers.createdAt));
+    }),
+
+    deleteSubscriber: protectedProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input, ctx }) => {
+        if (ctx.user?.role !== "admin") throw new Error("Unauthorized");
+        const db = await getDb();
+        if (!db) throw new Error("Database unavailable");
+
+        await db
+          .delete(newsletterSubscribers)
+          .where(eq(newsletterSubscribers.id, input.id));
+
+        return { success: true };
+      }),
   }),
 
   // Comments
