@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json } from "drizzle-orm/mysql-core";
+import { int, mysqlEnum, mysqlTable, text, timestamp, varchar, boolean, json, longtext } from "drizzle-orm/mysql-core";
 
 
 /**
@@ -173,3 +173,63 @@ export const partnerships = mysqlTable("partnerships", {
 
 export type Partnership = typeof partnerships.$inferSelect;
 export type InsertPartnership = typeof partnerships.$inferInsert;
+
+
+// Language preferences table
+export const languagePreferences = mysqlTable("languagePreferences", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").references(() => users.id, { onDelete: "cascade" }),
+  preferredLanguage: varchar("preferredLanguage", { length: 10 }).default("en").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type LanguagePreference = typeof languagePreferences.$inferSelect;
+export type InsertLanguagePreference = typeof languagePreferences.$inferInsert;
+
+// Article translations table
+export const articleTranslations = mysqlTable("articleTranslations", {
+  id: int("id").autoincrement().primaryKey(),
+  articleId: int("articleId").notNull().references(() => articles.id, { onDelete: "cascade" }),
+  language: varchar("language", { length: 10 }).notNull(),
+  title: varchar("title", { length: 500 }).notNull(),
+  slug: varchar("slug", { length: 500 }).notNull().unique(),
+  metaDescription: varchar("metaDescription", { length: 500 }),
+  content: longtext("content"),
+  translatedAt: timestamp("translatedAt").defaultNow().notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type ArticleTranslation = typeof articleTranslations.$inferSelect;
+export type InsertArticleTranslation = typeof articleTranslations.$inferInsert;
+
+// Category translations table
+export const categoryTranslations = mysqlTable("categoryTranslations", {
+  id: int("id").autoincrement().primaryKey(),
+  categoryId: int("categoryId").notNull().references(() => categories.id, { onDelete: "cascade" }),
+  language: varchar("language", { length: 10 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
+  slug: varchar("slug", { length: 255 }).notNull(),
+  description: varchar("description", { length: 500 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type CategoryTranslation = typeof categoryTranslations.$inferSelect;
+export type InsertCategoryTranslation = typeof categoryTranslations.$inferInsert;
+
+// Translation metadata table
+export const translationMetadata = mysqlTable("translationMetadata", {
+  id: int("id").autoincrement().primaryKey(),
+  contentType: varchar("contentType", { length: 50 }).notNull(), // 'article', 'category', 'tag'
+  contentId: int("contentId").notNull(),
+  language: varchar("language", { length: 10 }).notNull(),
+  translationStatus: mysqlEnum("translationStatus", ["pending", "translated", "reviewed", "published"]).default("pending").notNull(),
+  translationProvider: varchar("translationProvider", { length: 50 }).default("ai").notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type TranslationMetadata = typeof translationMetadata.$inferSelect;
+export type InsertTranslationMetadata = typeof translationMetadata.$inferInsert;
