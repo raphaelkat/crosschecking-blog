@@ -410,7 +410,7 @@
 - [x] Affiliate showcase component (AffiliateShowcase.tsx created)
 - [x] Newsletter subscriber management interface (AdminNewsletterSubscribers.tsx created)
 - [x] Comments moderation system (AdminCommentModeration.tsx created)
-- [ ] Author archive pages (/author/author-name)
+- [x] Author archive pages (AuthorArchive.tsx created)
 - [ ] Author social links on articles
 - [ ] Bulk operations in admin (publish, unpublish, delete)
 - [ ] Article preview functionality
