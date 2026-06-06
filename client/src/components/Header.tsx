@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun, Menu, X, ChevronDown } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+
 
 const CATEGORIES = [
   { name: "Tech & Gadgets", slug: "tech-gadgets" },
@@ -113,9 +113,6 @@ export default function Header() {
                 </div>
               )}
             </div>
-
-            {/* Language Switcher */}
-            <LanguageSwitcher />
 
             {/* Theme Toggle */}
             <button

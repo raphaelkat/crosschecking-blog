@@ -2,7 +2,7 @@ import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
-import { translationRouter } from "./routers/translation";
+
 import { articlePublishRouter } from "./routers/articles-publish";
 import { getDb, getUserByOpenId } from "./db";
 import { articles, categories, tags, articleTags, affiliateLinks, newsletterSubscribers, comments, testimonials, partnerships, users } from "../drizzle/schema";
@@ -1009,7 +1009,7 @@ export const appRouter = router({
         return { success: true };
       }),
     }),
-  translation: translationRouter,
+
   articlePublish: articlePublishRouter,
 });
 export type AppRouter = typeof appRouter;

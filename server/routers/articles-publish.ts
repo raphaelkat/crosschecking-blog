@@ -3,20 +3,15 @@ import { z } from "zod";
 import { getDb } from "../db";
 import { articles } from "../../drizzle/schema";
 import { eq } from "drizzle-orm";
-import { translateArticleToAllLanguages } from "../translation";
 
 /**
- * Phase 4: Auto-translation pipeline on article publish
+ * Article publishing router
  */
 export const articlePublishRouter = router({
-  publishWithTranslation: protectedProcedure
+  publish: protectedProcedure
     .input(
       z.object({
         articleId: z.number(),
-        title: z.string(),
-        description: z.string(),
-        content: z.string(),
-        autoTranslate: z.boolean().default(true),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -37,25 +32,11 @@ export const articlePublishRouter = router({
           })
           .where(eq(articles.id, input.articleId));
 
-        // Auto-translate if enabled
-        if (input.autoTranslate) {
-          // Run translation in background (don't wait)
-          translateArticleToAllLanguages(
-            input.articleId,
-            input.title,
-            input.description,
-            input.content
-          ).catch((error) => {
-            console.error("Background translation error:", error);
-          });
-        }
-
         return {
           success: true,
           message: "Article published successfully",
-          translationStarted: input.autoTranslate,
         };
-      } catch (error) {
+      } catch (error: any) {
         console.error("Publish error:", error);
         throw new Error("Failed to publish article");
       }
