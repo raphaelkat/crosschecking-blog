@@ -20,6 +20,8 @@ import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Disclaimer from "./pages/Disclaimer";
+import AdminLogin from "./pages/AdminLogin";
+import EditorLogin from "./pages/EditorLogin";
 
 function Router() {
   const [location] = useLocation();
@@ -44,6 +46,8 @@ function Router() {
           <Route path={"/disclaimer"} component={Disclaimer} />
           <Route path={"/article/:slug"} component={Article} />
           <Route path={"/category/:slug"} component={Category} />
+          <Route path={"/admin-login"} component={AdminLogin} />
+          <Route path={"/editor-login"} component={EditorLogin} />
           <Route path={"/admin"} component={AdminDashboard} />
           <Route path={"/admin/articles/new"} component={ArticleEditor} />
           <Route path={"/admin/articles/:id/edit"} component={ArticleEditor} />

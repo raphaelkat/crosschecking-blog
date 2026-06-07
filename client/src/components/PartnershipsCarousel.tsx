@@ -1,8 +1,21 @@
 import { trpc } from "@/lib/trpc";
+import { useState, useEffect } from "react";
 import DotCarousel from "./DotCarousel";
 
 export default function PartnershipsCarousel() {
   const { data: partnerships = [] } = trpc.partnerships.list.useQuery();
+  const [itemsPerSlide, setItemsPerSlide] = useState(3);
+
+  // Handle responsive items per slide
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerSlide(window.innerWidth < 768 ? 1 : 3);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   if (partnerships.length === 0) return null;
 
@@ -48,7 +61,7 @@ export default function PartnershipsCarousel() {
           renderItem={renderPartner}
           autoplayInterval={4000}
           showCounter={false}
-          itemsPerSlide={3}
+          itemsPerSlide={itemsPerSlide}
           className="px-4"
         />
       </div>

@@ -20,7 +20,20 @@ export function registerOAuthRoutes(app: Express) {
     }
 
     try {
-      const tokenResponse = await sdk.exchangeCodeForToken(code, state);
+      // Decode state to get redirect URI and return path
+      let redirectUri = state;
+      let returnPath = "/";
+      
+      try {
+        const decodedState = JSON.parse(atob(state));
+        redirectUri = decodedState.redirectUri || state;
+        returnPath = decodedState.returnPath || "/";
+      } catch {
+        // Fallback to old format (plain redirect URI)
+        redirectUri = state;
+      }
+
+      const tokenResponse = await sdk.exchangeCodeForToken(code, redirectUri);
       const userInfo = await sdk.getUserInfo(tokenResponse.accessToken);
 
       if (!userInfo.openId) {
@@ -44,7 +57,7 @@ export function registerOAuthRoutes(app: Express) {
       const cookieOptions = getSessionCookieOptions(req);
       res.cookie(COOKIE_NAME, sessionToken, { ...cookieOptions, maxAge: ONE_YEAR_MS });
 
-      res.redirect(302, "/");
+      res.redirect(302, returnPath);
     } catch (error) {
       console.error("[OAuth] Callback failed", error);
       res.status(500).json({ error: "OAuth callback failed" });
