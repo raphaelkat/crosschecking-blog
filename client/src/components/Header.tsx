@@ -60,7 +60,7 @@ export default function Header() {
             <img 
               src="/manus-storage/horizontal_618530b1.png" 
               alt="Crosschecking.blog" 
-              className="h-16 w-auto hover:opacity-80 transition-opacity"
+              className="h-20 w-auto hover:opacity-80 transition-opacity"
             />
           </Link>
 
