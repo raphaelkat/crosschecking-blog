@@ -259,7 +259,7 @@ MIT
 
 ## 💬 Support
 
-For issues and questions, please open an issue on GitHub or contact the development team.
+For issues and questions, please open an issue on GitHub or contact the development team on crosschecking.blo@gmail.com.
 
 ---
 
